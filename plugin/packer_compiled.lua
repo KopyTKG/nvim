@@ -80,6 +80,16 @@ _G.packer_plugins = {
     path = "/home/kopy/.local/share/nvim/site/pack/packer/start/catppuccin",
     url = "https://github.com/catppuccin/nvim"
   },
+  ["denops.vim"] = {
+    loaded = true,
+    path = "/home/kopy/.local/share/nvim/site/pack/packer/start/denops.vim",
+    url = "https://github.com/vim-denops/denops.vim"
+  },
+  ["gin.vim"] = {
+    loaded = true,
+    path = "/home/kopy/.local/share/nvim/site/pack/packer/start/gin.vim",
+    url = "https://github.com/lambdalisue/gin.vim"
+  },
   harpoon = {
     loaded = true,
     path = "/home/kopy/.local/share/nvim/site/pack/packer/start/harpoon",
@@ -131,10 +141,6 @@ _G.packer_plugins = {
 }
 
 time([[Defining packer_plugins]], false)
--- Config for: catppuccin
-time([[Config for catppuccin]], true)
-try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\27colorscheme catppuccin\bcmd\bvim\0", "config", "catppuccin")
-time([[Config for catppuccin]], false)
 -- Config for: nvim-lspconfig
 time([[Config for nvim-lspconfig]], true)
 try_loadstring("\27LJ\2\n)\0\0\3\0\2\0\0046\0\0\0'\2\1\0B\0\2\2K\0\1\0\14lspconfig\frequire\0", "config", "nvim-lspconfig")
@@ -143,6 +149,10 @@ time([[Config for nvim-lspconfig]], false)
 time([[Config for mason-lspconfig.nvim]], true)
 try_loadstring("\27LJ\2\n\\\0\0\3\0\4\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\1K\0\1\0\1\0\1\27automatic_installation\2\nsetup\20mason-lspconfig\frequire\0", "config", "mason-lspconfig.nvim")
 time([[Config for mason-lspconfig.nvim]], false)
+-- Config for: catppuccin
+time([[Config for catppuccin]], true)
+try_loadstring("\27LJ\2\n:\0\0\3\0\3\0\0056\0\0\0009\0\1\0'\2\2\0B\0\2\1K\0\1\0\27colorscheme catppuccin\bcmd\bvim\0", "config", "catppuccin")
+time([[Config for catppuccin]], false)
 -- Config for: mason.nvim
 time([[Config for mason.nvim]], true)
 try_loadstring("\27LJ\2\n3\0\0\3\0\3\0\0066\0\0\0'\2\1\0B\0\2\0029\0\2\0B\0\1\1K\0\1\0\nsetup\nmason\frequire\0", "config", "mason.nvim")

@@ -3,7 +3,7 @@ require("mason").setup()
 local DEFAULT_SETTINGS = {
     ---@since 1.0.0
     -- The directory in which to install packages.
-    install_root_dir = path.concat { vim.fn.stdpath "data", "mason" },
+    -- install_root_dir = path.concat { vim.fn.stdpath "data", "mason" },
 
     ---@since 1.0.0
     -- Where Mason should put its bin location in your PATH. Can be one of:

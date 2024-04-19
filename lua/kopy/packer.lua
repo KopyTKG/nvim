@@ -63,7 +63,11 @@ return require('packer').startup(function(use)
             })
         end
     }
-
+	
+    use {
+	    'vim-denops/denops.vim',
+	    'lambdalisue/gin.vim'
+    }
     -- Neovim LSP configurations
     use {
         "neovim/nvim-lspconfig",
