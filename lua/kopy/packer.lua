@@ -63,11 +63,7 @@ return require('packer').startup(function(use)
             })
         end
     }
-	
-    use {
-	    'vim-denops/denops.vim',
-	    'lambdalisue/gin.vim'
-    }
+
     -- Neovim LSP configurations
     use {
         "neovim/nvim-lspconfig",
@@ -80,5 +76,7 @@ return require('packer').startup(function(use)
         end
     }
 
+    -- Discord Rich Presence just for flex
+    use 'andweeb/presence.nvim'
 end)
 
