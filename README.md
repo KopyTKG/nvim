@@ -6,6 +6,19 @@ This is my personal NeoVIM configuration. It is a work in progress and will be u
 - [Packer.nvim](https://github.com/wbthomason/packer.nvim)
 - [Copilot](https://github.com/github/copilot.vim)
 
+## Plugins
+- [wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)
+- [nvim-telescope/telescope.nvim](https://github.com/nvim-telescope/telescope.nvim)
+- [catppuccin/nvim](https://github.com/catppuccin/nvim)
+- [nvim-treesitter/nvim-treesitter](https://github.com/nvim-treesitter/nvim-treesitter)
+- [nvim-lua/plenary.nvim](https://github.com/nvim-lua/plenary.nvim)
+- [ThePrimeagen/harpoon2](https://github.com/ThePrimeagen/harpoon/tree/harpoon2)
+- [mfussenegger/nvim-dap](https://github.com/mfussenegger/nvim-dap)
+- [williamboman/mason.nvim](https://github.com/williamboman/mason.nvim)
+- [williamboman/mason-lspconfig.nvim](https://github.com/williamboman/mason-lspconfig.nvim)
+- [neovim/nvim-lspconfig](https://github.com/neovim/nvim-lspconfig)
+- [andweeb/presence.nvim](https://github.com/andweeb/presence.nvim)
+
 ## Not nvim tools
 - [Lazygit](https://github.com/jesseduffield/lazygit)
 
@@ -19,6 +32,7 @@ This is my personal NeoVIM configuration. It is a work in progress and will be u
 - `<leader>` is set to the space bar.
 - `<leader>w` - Save the current buffer.
 - `<leader>pv` - Open builtin file explorer.
+- `<F12>` - Opens terminal with `lazygit`.
 
 ### Harpoon
 - `<leader>a` - Add the current file to the Harpoon bookmarks.
@@ -34,7 +48,5 @@ This is my personal NeoVIM configuration. It is a work in progress and will be u
 - `<leader>pf` - Find files.
 - `<leader>pg` - Find git files.
 - `<leader>ps` - Find with grep text in files.
-
-
 
 *TBD comming soon*
