@@ -47,6 +47,7 @@ This is my personal NeoVIM configuration. It is a work in progress and will be u
 
 ### Harpoon
 - `<leader>a` - Add the current file to the Harpoon bookmarks.
+- `<leader>d` - Remove the current file to the Harpoon bookmarks.
 - `<C-e>` - Toggle the Harpoon bookmarks.
 - `<leader>1` - Open the first bookmark.
 - `<leader>2` - Open the second bookmark.

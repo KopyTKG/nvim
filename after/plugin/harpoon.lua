@@ -17,4 +17,5 @@ vim.keymap.set("n", "<leader>4", function() harpoon:list():select(4) end)
 vim.keymap.set("n", "<F2>", function() harpoon:list():prev() end)
 vim.keymap.set("n", "<F3>", function() harpoon:list():next() end)
 
-
+-- Remove a buffer from the list
+vim.keymap.set("n", "<leader>d", function() harpoon:list():remove() end)
