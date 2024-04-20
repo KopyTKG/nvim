@@ -34,6 +34,17 @@ This is my personal NeoVIM configuration. It is a work in progress and will be u
 - `<leader>pv` - Open builtin file explorer.
 - `<F12>` - Opens terminal with `lazygit`.
 
+### Splits
+- `<C-w><C-v>` - Create vertical split.
+- `<C-h>` - Move to the left split.
+- `<C-j>` - Move to the bottom split.
+
+### LSP
+- `<leader>e` - Show LSP [E]rror diagnostics.
+- `<leader>q` - Show LSP [Q]uickfix list.
+- `[d` - Go to previous diagnostic.
+- `]d` - Go to next diagnostic.
+
 ### Harpoon
 - `<leader>a` - Add the current file to the Harpoon bookmarks.
 - `<C-e>` - Toggle the Harpoon bookmarks.
