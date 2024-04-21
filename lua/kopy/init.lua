@@ -1,4 +1,7 @@
 require("kopy.remap")
+require("kopy.git")
+
+require("kopy.lazy_init")
 
 -- Set relative line numbers
 vim.opt.relativenumber = true
@@ -41,3 +44,4 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
+

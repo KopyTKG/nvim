@@ -5,4 +5,3 @@ vim.keymap.set('n', '<leader>ps', function()
 	builtin.grep_string({search = vim.fn.input("Grep > ")})
 end, {desc = '[P]roject [S]earch'})
 vim.keymap.set('n', '<leader>sw', builtin.grep_string, { desc = '[S]earch current [W]ord' })
-
