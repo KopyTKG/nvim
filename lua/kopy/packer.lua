@@ -78,5 +78,10 @@ return require('packer').startup(function(use)
 
     -- Discord Rich Presence just for flex
     use 'andweeb/presence.nvim'
+
+    -- LSP for web development
+    use('jose-elias-alvarez/null-ls.nvim')
+    use('MunifTanjim/prettier.nvim')
+
 end)
 
