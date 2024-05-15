@@ -33,6 +33,9 @@ vim.opt.splitright = true
 -- Scroll buffer
 vim.opt.scrolloff = 10
 
+-- Change Netrw directory listing
+vim.g.netrw_liststyle = 3
+
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
 	desc = "Highlight on yank",
