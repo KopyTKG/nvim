@@ -1,4 +1,5 @@
 require("kopy.remap")
+require("kopy.packer")
 
 -- Set relative line numbers
 vim.opt.relativenumber = true
