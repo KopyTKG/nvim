@@ -21,4 +21,6 @@ vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, {desc = "Open [E]rro
 vim.keymap.set("n", "<C-h>", "<C-w><C-h>", {desc = "Move to the left window"})
 vim.keymap.set("n", "<C-l>", "<C-w><C-l>", {desc = "Move to the right window"})
 
-
+-- Keymaps for commenting
+vim.keymap.set("n", "<C-b>", "gcc", {desc = "Toggle line [C]omment"})
+vim.keymap.set("n", "<C-n>", "gbc", {desc = "Toggle block [C]omment"})

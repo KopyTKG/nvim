@@ -65,19 +65,18 @@ return require('packer').startup(function(use)
     }
 
     -- Neovim LSP configurations
-    use {
-        "neovim/nvim-lspconfig",
-        config = function()
-            local lspconfig = require('lspconfig')
-
-            -- Setup servers here with lspconfig.SERVER.setup{}
-            -- Example: lspconfig.pyright.setup{}
-            -- More configurations can be added as needed
-        end
-    }
+    use "neovim/nvim-lspconfig"
 
     -- Discord Rich Presence just for flex
     use 'andweeb/presence.nvim'
+
+    -- Commenting plugin
+	use {
+	    'numToStr/Comment.nvim',
+	    config = function()
+	        require('Comment').setup()
+	    end
+	}
 
     -- LSP for web development
     use('jose-elias-alvarez/null-ls.nvim')
