@@ -83,5 +83,18 @@ return require('packer').startup(function(use)
     use('MunifTanjim/prettier.nvim')
     use('tpope/vim-fugitive')
     use('rhysd/vim-clang-format')
+
+    -- Code completion
+    use 'hrsh7th/nvim-cmp'
+    use({
+	"L3MON4D3/LuaSnip",
+	-- follow latest release.
+	tag = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+	-- install jsregexp (optional!:).
+	run = "make install_jsregexp"
+    })
+    use "saadparwaiz1/cmp_luasnip"
+    use "rafamadriz/friendly-snippets"
+    use "hrsh7th/cmp-nvim-lsp"
 end)
 
