@@ -5,7 +5,7 @@ vim.keymap.set({"n", "i", "v"},"<leader>s", "")
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>w", vim.cmd.w)
-vim.keymap.set("n", "<leader>c", [[:%s/<C-r><C-w>//g<Left><Left>]])
+vim.keymap.set("n", "<leader>s", [[:%s/<C-r><C-w>//g<Left><Left>]])
 
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
