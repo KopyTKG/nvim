@@ -9,4 +9,3 @@ null_ls.setup({
 	},
 })
 
-vim.keymap.set("n", "<leader>d", vim.lsp.buf.format, {})
