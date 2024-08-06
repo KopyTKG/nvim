@@ -1,7 +1,6 @@
 vim.g.mapleader = " "
 
-vim.keymap.set({"n", "i", "v"},"<leader>s", "")
-
+vim.api.nvim_set_keymap('i', '<Space>', '<Space>', { noremap = true, silent = true })
 
 vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 vim.keymap.set("n", "<leader>w", vim.cmd.w)
