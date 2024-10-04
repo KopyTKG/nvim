@@ -35,7 +35,7 @@ vim.opt.splitright = true
 vim.opt.scrolloff = 10
 
 -- Change Netrw directory listing
-vim.g.netrw_liststyle = 3
+vim.g.netrw_liststyle = 0
 
 -- Enable true color support
 vim.o.termguicolors = true
