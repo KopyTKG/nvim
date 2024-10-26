@@ -1,7 +1,6 @@
 require("kopy.remap")
 require("kopy.git")
-
-require("kopy.lazy_init")
+require("kopy.lazy")
 
 -- Set relative line numbers
 vim.opt.relativenumber = true
@@ -27,7 +26,7 @@ vim.opt.signcolumn = "yes"
 -- Decrease update time
 vim.opt.updatetime = 250
 -- Decrease mapped sequence wait time
-vim.opt.timeoutlen = 300
+vim.opt.timeoutlen = 250
 
 -- Split navigations
 vim.opt.splitbelow = true
@@ -35,6 +34,92 @@ vim.opt.splitright = true
 
 -- Scroll buffer
 vim.opt.scrolloff = 10
+
+-- Change Netrw directory listing
+vim.g.netrw_liststyle = 0
+
+-- Enable true color support
+vim.o.termguicolors = true
+
+-- Enable true color support
+vim.o.termguicolors = true
+
+-- Define custom highlight groups for Git branches
+vim.cmd('highlight GitBranch guifg=#ff0000 guibg=#000000 gui=bold')
+
+local function git_branch()
+
+    local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+
+    if string.len(branch) > 0 then
+
+        return branch
+
+    else
+
+        return ":"
+
+    end
+
+end
+
+
+
+local function statusline()
+
+    local set_color_1 = "%#GitBranch#"
+
+    local branch = git_branch()
+
+    local set_color_2 = "%#StatusLine#"
+
+    local file_name = " %f"
+
+    local modified = "%m"
+
+    local align_right = "%="
+
+    local filetype = " %y"
+
+    local linecol = " %l:%c"
+
+
+
+    return string.format(
+
+        "%s %s %s%s%s%s%s%s",
+
+        set_color_1,
+
+        branch,
+
+        set_color_2,
+
+        file_name,
+
+        modified,
+
+        align_right,
+
+        filetype,
+
+        linecol
+
+    )
+
+end
+
+
+
+vim.opt.statusline = statusline()
+
+-- Display statusline always
+vim.opt.laststatus = 2
+
+-- Relative line numbers with cursor line number
+vim.opt.number = true
+vim.opt.cursorline = true
+
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
@@ -44,4 +129,3 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 		vim.highlight.on_yank()
 	end,
 })
-
