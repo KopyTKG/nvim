@@ -3,8 +3,6 @@ This is my personal NeoVIM configuration. It is a work in progress and will be u
 
 ## Prerequisites
 - [NeoVIM](https://neovim.io/)
-- [Packer.nvim](https://github.com/wbthomason/packer.nvim)
-- [Copilot](https://github.com/github/copilot.vim)
 
 ## Plugins
 - [wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)
