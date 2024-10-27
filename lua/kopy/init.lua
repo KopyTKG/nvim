@@ -1,6 +1,5 @@
 require("kopy.lazy")
 require("kopy.remap")
-require("kopy.lazy")
 
 -- Set relative line numbers
 vim.opt.relativenumber = true
