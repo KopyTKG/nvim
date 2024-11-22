@@ -1,7 +1,7 @@
-local prettier = require("prettier")
+local prettier = require "prettier"
 
-prettier.setup({
-  bin = 'prettier', -- or `'prettierd'` (v0.23.3+)
+prettier.setup {
+  bin = "prettier",
   filetypes = {
     "css",
     "graphql",
@@ -18,10 +18,10 @@ prettier.setup({
   },
   ["null-ls"] = {
     condition = function()
-      return prettier.config_exists({
+      return prettier.config_exists {
         -- if `false`, skips checking `package.json` for `"prettier"` key
         check_package_json = true,
-      })
+      }
     end,
     runtime_condition = function(params)
       -- return false to skip running prettier
@@ -49,4 +49,4 @@ prettier.setup({
     use_tabs = false,
     vue_indent_script_and_style = false,
   },
-})
+}

@@ -1,5 +1,5 @@
-require("kopy.lazy")
-require("kopy.remap")
+require "kopy.lazy"
+require "kopy.remap"
 
 -- Set relative line numbers
 vim.opt.relativenumber = true
@@ -44,71 +44,48 @@ vim.o.termguicolors = true
 vim.o.termguicolors = true
 
 -- Define custom highlight groups for Git branches
-vim.cmd('highlight GitBranch guifg=#ff0000 guibg=#000000 gui=bold')
+vim.cmd "highlight GitBranch guifg=#ff0000 guibg=#000000 gui=bold"
 
 local function git_branch()
+  local branch =
+    vim.fn.system "git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'"
 
-    local branch = vim.fn.system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-
-    if string.len(branch) > 0 then
-
-        return branch
-
-    else
-
-        return ":"
-
-    end
-
+  if string.len(branch) > 0 then
+    return branch
+  else
+    return ":"
+  end
 end
-
-
 
 local function statusline()
+  local set_color_1 = "%#GitBranch#"
 
-    local set_color_1 = "%#GitBranch#"
+  local branch = git_branch()
 
-    local branch = git_branch()
+  local set_color_2 = "%#StatusLine#"
 
-    local set_color_2 = "%#StatusLine#"
+  local file_name = " %f"
 
-    local file_name = " %f"
+  local modified = "%m"
 
-    local modified = "%m"
+  local align_right = "%="
 
-    local align_right = "%="
+  local filetype = " %y"
 
-    local filetype = " %y"
+  local linecol = " %l:%c"
 
-    local linecol = " %l:%c"
-
-
-
-    return string.format(
-
-        "%s %s %s%s%s%s%s%s",
-
-        set_color_1,
-
-        branch,
-
-        set_color_2,
-
-        file_name,
-
-        modified,
-
-        align_right,
-
-        filetype,
-
-        linecol
-
-    )
-
+  return string.format(
+    "%s %s %s%s%s%s%s%s",
+    set_color_1,
+    branch,
+    set_color_2,
+    file_name,
+    modified,
+    align_right,
+    filetype,
+    linecol
+  )
 end
-
-
 
 vim.opt.statusline = statusline()
 
@@ -119,12 +96,23 @@ vim.opt.laststatus = 2
 vim.opt.number = true
 vim.opt.cursorline = true
 
-
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
-	desc = "Highlight on yank",
-	group = vim.api.nvim_create_augroup("Highlight on yank", {clear = true}),
-	callback = function()
-		vim.highlight.on_yank()
-	end,
+  desc = "Highlight on yank",
+  group = vim.api.nvim_create_augroup("Highlight on yank", {
+    clear = true,
+  }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
 })
+
+vim.api.nvim_exec(
+  [[
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost * FormatWrite
+augroup END
+]],
+  true
+)
