@@ -54,4 +54,19 @@ require("mason-lspconfig").setup_handlers {
       capabilities = require("cmp_nvim_lsp").default_capabilities(),
     }
   end,
+  ["pyright"] = function()
+    lspconfig.pyright.setup {
+      settings = {
+        python = {
+          analysis = {
+            extraPaths = { "." },
+            autoSearchPaths = true,
+            useLibraryCodeForTypes = true,
+            diagnosticMode = "workspace",
+          },
+        },
+      },
+      capabilities = require("cmp_nvim_lsp").default_capabilities(),
+    }
+  end,
 }
