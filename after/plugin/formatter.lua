@@ -36,7 +36,7 @@ require("formatter").setup {
         }
       end,
     },
-    jsx = {
+    javascriptreact = {
       function()
         return {
           exe = "prettier",
@@ -50,21 +50,7 @@ require("formatter").setup {
         }
       end,
     },
-    tsx = {
-      function()
-        return {
-          exe = "prettier",
-          args = {
-            "--config-file",
-            vim.fn.stdpath "config" .. "/formatter/prettier.config.js", -- Optional: Path to prettier.config.js
-            "--stdin-filepath",
-            util.escape_path(util.get_current_buffer_file_path()),
-          },
-          stdin = true,
-        }
-      end,
-    },
-    cjs = {
+    typescriptreact = {
       function()
         return {
           exe = "prettier",
