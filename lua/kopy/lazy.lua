@@ -92,4 +92,5 @@ require("lazy").setup {
     end,
     ft = { "markdown" },
   },
+  "WhoIsSethDaniel/mason-tool-installer.nvim",
 }

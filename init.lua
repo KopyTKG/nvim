@@ -12,40 +12,48 @@ require("mason").setup {
 
 require("mason-lspconfig").setup {
   ensure_installed = {
-    "lua_ls", -- Lua
-    "rust_analyzer", -- Rust
-    "clangd", -- C/C++
-    "gopls", -- Go
-    "pyright", -- Python
-    "cmake", -- CMake
-    "ts_ls", -- TypeScript/JavaScript
-    "html", -- HTML
-    "eslint", -- ESLint
-    "tailwindcss", -- Tailwind CSS
-    "dockerls", -- Docker
-    "docker_compose_language_service", -- Docker Compose
-    "jsonls", -- JSON
-    "pylsp", -- Python LSP (alternative to Pyright)
-    "vimls", -- Vimscript
-    "ansiblels", -- Ansible
-    "ast_grep", -- AST Grep (if supported by lspconfig)
+    "lua_ls", -- lua
+    "rust_analyzer", -- rust
+    "clangd", -- c/c++
+    "gopls", -- go
+    "pyright", -- python
+    "cmake", -- cmake
+    "ts_ls", -- typescript/javascript
+    "html", -- html
+    "eslint", -- eslint
+    "tailwindcss", -- tailwind css
+    "dockerls", -- docker
+    "docker_compose_language_service", -- docker compose
+    "jsonls", -- json
+    "pylsp", -- python lsp (alternative to pyright)
+    "vimls", -- vimscript
+    "ansiblels", -- ansible
+    "ast_grep", -- ast grep (if supported by lspconfig)
   },
   automatic_installation = true,
 }
 
--- Setup lspconfig for each server
+require("mason-tool-installer").setup {
+  ensure_installed = {
+    "prettier", -- prettier formatter
+    "stylua", -- lua formatter
+    -- you can add other formatters here
+  },
+}
+
+-- setup lspconfig for each server
 local lspconfig = require "lspconfig"
 require("mason-lspconfig").setup_handlers {
-  function(server_name) -- Default handler for all servers
+  function(server_name) -- default handler for all servers
     lspconfig[server_name].setup {
       capabilities = require("cmp_nvim_lsp").default_capabilities(),
     }
   end,
-  -- Custom settings for specific servers can be added here
+  -- custom settings for specific servers can be added here
   ["lua_ls"] = function()
     lspconfig.lua_ls.setup {
       settings = {
-        Lua = {
+        lua = {
           diagnostics = {
             globals = { "vim" },
           },
@@ -59,10 +67,10 @@ require("mason-lspconfig").setup_handlers {
       settings = {
         python = {
           analysis = {
-            extraPaths = { "." },
-            autoSearchPaths = true,
-            useLibraryCodeForTypes = true,
-            diagnosticMode = "workspace",
+            extrapaths = { "." },
+            autosearchpaths = true,
+            uselibrarycodefortypes = true,
+            diagnosticmode = "workspace",
           },
         },
       },
