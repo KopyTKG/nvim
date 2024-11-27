@@ -85,8 +85,16 @@ require("formatter").setup {
       end,
     },
     go = {
-      exe = "gofmt",
-      args = { "-w", "%" },
+      function()
+        return {
+          exe = "goimports",
+          args = {
+            "-srcdir",
+            util.get_current_buffer_file_path(), -- Specify the directory
+          },
+          stdin = true,
+        }
+      end,
     },
   },
 }

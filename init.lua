@@ -37,7 +37,7 @@ require("mason-tool-installer").setup {
   ensure_installed = {
     "prettier", -- prettier formatter
     "stylua", -- lua formatter
-    -- you can add other formatters here
+    "goimports", -- go formatter
   },
 }
 
