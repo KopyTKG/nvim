@@ -84,5 +84,9 @@ require("formatter").setup {
         }
       end,
     },
+    go = {
+      exe = "gofmt",
+      args = { "-w", "%" },
+    },
   },
 }
