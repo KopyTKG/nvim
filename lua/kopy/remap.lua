@@ -55,8 +55,8 @@ vim.keymap.set(
 )
 
 -- Keymaps for commenting
-vim.keymap.set("n", "<C-b>", "gcc", { desc = "Toggle line [C]omment" })
-vim.keymap.set("n", "<C-n>", "gbc", { desc = "Toggle block [C]omment" })
+vim.keymap.set("n", "<C-b>", "gc", { desc = "Toggle line [C]omment" })
+vim.keymap.set("n", "<C-n>", "gb", { desc = "Toggle block [C]omment" })
 
 -- Telescope
 local builtin = require "telescope.builtin"
