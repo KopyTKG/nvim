@@ -20,6 +20,7 @@ require("mason-lspconfig").setup {
     "cmake", -- cmake
     "ts_ls", -- typescript/javascript
     "html", -- html
+    "texlab", -- latex
     "eslint", -- eslint
     "tailwindcss", -- tailwind css
     "dockerls", -- docker
