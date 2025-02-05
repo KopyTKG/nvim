@@ -93,4 +93,5 @@ require("lazy").setup {
     ft = { "markdown" },
   },
   "WhoIsSethDaniel/mason-tool-installer.nvim",
+  "normen/vim-pio",
 }
