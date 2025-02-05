@@ -36,6 +36,7 @@ local DEFAULT_SETTINGS = {
   -- The provider implementations to use for resolving supplementary package metadata (e.g., all available versions).
   -- Accepts multiple entries, where later entries will be used as fallback should prior providers fail.
   -- Builtin providers are:
+  --
   --   - mason.providers.registry-api  - uses the https://api.mason-registry.dev API
   --   - mason.providers.client        - uses only client-side tooling to resolve metadata
   providers = {
