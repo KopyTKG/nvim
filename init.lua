@@ -19,6 +19,7 @@ require("mason-lspconfig").setup {
     "pyright", -- python
     "cmake", -- cmake
     "ts_ls", -- typescript/javascript
+    "denols", -- deno runtime lsp
     "html", -- html
     "texlab", -- latex
     "eslint", -- eslint
@@ -76,6 +77,19 @@ require("mason-lspconfig").setup_handlers {
         },
       },
       capabilities = require("cmp_nvim_lsp").default_capabilities(),
+    }
+  end,
+  ["denols"] = function()
+    lspconfig.denols.setup {
+      on_attach = on_attach,
+      root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+    }
+  end,
+  ["ts_ls"] = function()
+    lspconfig.ts_ls.setup {
+      on_attach = on_attach,
+      root_dir = lspconfig.util.root_pattern "package.json",
+      single_file_support = false,
     }
   end,
 }
