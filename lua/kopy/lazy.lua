@@ -1,4 +1,5 @@
 local lazypath = vim.fn.stdpath "data" .. "/lazy/lazy.nvim"
+
 if not (vim.uv or vim.loop).fs_stat(lazypath) then
   vim.fn.system {
     "git",
@@ -29,9 +30,7 @@ require("lazy").setup {
   {
     "mhartington/formatter.nvim",
     config = function()
-      require("formatter").setup {
-        -- Your configuration here
-      }
+      require("formatter").setup {}
     end,
   },
   {
@@ -51,20 +50,51 @@ require("lazy").setup {
     branch = "harpoon2",
     requires = { { "nvim-lua/plenary.nvim" } },
   },
+
+  -- MASON STUFF --
   {
-    "williamboman/mason.nvim",
-    config = function()
-      require("mason").setup()
-    end,
+    "mason-org/mason.nvim",
+    opts = {
+      ui = {
+        icons = {
+          package_installed = "✓",
+          package_pending = "➜",
+          package_uninstalled = "✗",
+        },
+      },
+    },
   },
   {
-    "williamboman/mason-lspconfig.nvim",
-    config = function()
-      require("mason-lspconfig").setup {
-        automatic_installation = true,
-      }
-    end,
+    "mason-org/mason-lspconfig.nvim",
+    opts = {
+      ensure_installed = {
+        "lua_ls", -- lua
+        "rust_analyzer", -- rust
+        "clangd", -- c/c++
+        "gopls", -- go
+        "pyright", -- python
+        "cmake", -- cmake
+        "ts_ls", -- typescript/javascript
+        "denols", -- deno runtime lsp
+        "html", -- html
+        "texlab", -- latex
+        "eslint", -- eslint
+        "tailwindcss", -- tailwind css
+        "jsonls", -- json
+        "pylsp", -- python lsp (alternative to pyright)
+        "vimls", -- vimscript
+        "ansiblels", -- ansible
+        "ast_grep", -- ast grep (if supported by lspconfig)
+      },
+    },
+    dependencies = {
+      { "mason-org/mason.nvim", opts = {} },
+      "neovim/nvim-lspconfig",
+    },
   },
+
+  ------------------------
+
   {
     "numToStr/Comment.nvim",
     config = function()
@@ -94,4 +124,5 @@ require("lazy").setup {
   },
   "WhoIsSethDaniel/mason-tool-installer.nvim",
   "normen/vim-pio",
+  "github/copilot.vim",
 }
