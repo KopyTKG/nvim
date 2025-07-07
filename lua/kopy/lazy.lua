@@ -156,13 +156,17 @@ require("lazy").setup {
       lspconfig.denols.setup {
         capabilities = capabilities,
         root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
-        -- on_attach = custom_on_attach, -- optional
       }
 
       -- Custom setup for ts_ls (prefer project with package.json)
       lspconfig.ts_ls.setup {
-        on_attach = on_attach,
-        root_dir = lspconfig.util.root_pattern "package.json",
+        root_dir = function(fname)
+          return lspconfig.util.root_pattern(
+            "package.json",
+            "tsconfig.json",
+            "jsconfig.json"
+          )(fname) or lspconfig.util.find_git_ancestor(fname)
+        end,
         single_file_support = false,
       }
 
