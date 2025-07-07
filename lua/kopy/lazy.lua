@@ -74,7 +74,6 @@ require("lazy").setup {
         "pyright",
         "cmake",
         "ts_ls",
-        "denols",
         "html",
         "texlab",
         "eslint",
@@ -102,8 +101,6 @@ require("lazy").setup {
 
       -- List of servers for default setup
       local servers = {
-        "pyright",
-        "ts_ls",
         "clangd",
         "gopls",
         "rust_analyzer",
@@ -150,12 +147,6 @@ require("lazy").setup {
           },
         },
         capabilities = require("cmp_nvim_lsp").default_capabilities(),
-      }
-
-      -- Custom setup for denols
-      lspconfig.denols.setup {
-        capabilities = capabilities,
-        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
       }
 
       -- Custom setup for ts_ls (prefer project with package.json)
