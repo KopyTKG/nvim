@@ -16,7 +16,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup {
   "wbthomason/packer.nvim",
   "nvim-lua/plenary.nvim",
-  "neovim/nvim-lspconfig",
   "andweeb/presence.nvim",
   "MunifTanjim/prettier.nvim",
   "tpope/vim-fugitive",
@@ -68,29 +67,107 @@ require("lazy").setup {
     "mason-org/mason-lspconfig.nvim",
     opts = {
       ensure_installed = {
-        "lua_ls", -- lua
-        "rust_analyzer", -- rust
-        "clangd", -- c/c++
-        "gopls", -- go
-        "pyright", -- python
-        "cmake", -- cmake
-        "ts_ls", -- typescript/javascript
-        "denols", -- deno runtime lsp
-        "html", -- html
-        "texlab", -- latex
-        "eslint", -- eslint
-        "tailwindcss", -- tailwind css
-        "jsonls", -- json
-        "pylsp", -- python lsp (alternative to pyright)
-        "vimls", -- vimscript
-        "ansiblels", -- ansible
-        "ast_grep", -- ast grep (if supported by lspconfig)
+        "lua_ls",
+        "rust_analyzer",
+        "clangd",
+        "gopls",
+        "pyright",
+        "cmake",
+        "ts_ls",
+        "denols",
+        "html",
+        "texlab",
+        "eslint",
+        "tailwindcss",
+        "jsonls",
+        "pylsp",
+        "vimls",
+        "ansiblels",
+        "ast_grep",
       },
     },
     dependencies = {
       { "mason-org/mason.nvim", opts = {} },
       "neovim/nvim-lspconfig",
     },
+  },
+
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = { "hrsh7th/cmp-nvim-lsp" },
+    config = function()
+      local lspconfig = require "lspconfig"
+      local cmp_nvim_lsp = require "cmp_nvim_lsp"
+      local capabilities = cmp_nvim_lsp.default_capabilities()
+
+      -- List of servers for default setup
+      local servers = {
+        "pyright",
+        "ts_ls",
+        "clangd",
+        "gopls",
+        "rust_analyzer",
+        "html",
+        "texlab",
+        "eslint",
+        "tailwindcss",
+        "jsonls",
+        "cmake",
+        "pylsp",
+        "vimls",
+        "ansiblels",
+      }
+
+      -- Default setup for most servers
+      for _, server in ipairs(servers) do
+        lspconfig[server].setup {
+          capabilities = capabilities,
+        }
+      end
+
+      -- Custom setup for lua_ls
+      lspconfig.lua_ls.setup {
+        capabilities = capabilities,
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim" },
+            },
+          },
+        },
+      }
+
+      -- Custom setup for pyright
+      lspconfig.pyright.setup {
+        settings = {
+          python = {
+            analysis = {
+              extrapaths = { "." },
+              autosearchpaths = true,
+              uselibrarycodefortypes = true,
+              diagnosticmode = "workspace",
+            },
+          },
+        },
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+      }
+
+      -- Custom setup for denols
+      lspconfig.denols.setup {
+        capabilities = capabilities,
+        root_dir = lspconfig.util.root_pattern("deno.json", "deno.jsonc"),
+        -- on_attach = custom_on_attach, -- optional
+      }
+
+      -- Custom setup for ts_ls (prefer project with package.json)
+      lspconfig.ts_ls.setup {
+        on_attach = on_attach,
+        root_dir = lspconfig.util.root_pattern "package.json",
+        single_file_support = false,
+      }
+
+      -- You can add more custom server setups here...
+    end,
   },
 
   ------------------------
