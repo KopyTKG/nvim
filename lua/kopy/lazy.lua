@@ -83,6 +83,7 @@ require("lazy").setup {
         "vimls",
         "ansiblels",
         "ast_grep",
+        "harper_ls",
       },
     },
     dependencies = {
