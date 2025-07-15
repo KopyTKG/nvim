@@ -5,6 +5,7 @@ require("mason-tool-installer").setup {
     "prettier", -- prettier formatter
     "stylua", -- lua formatter
     "goimports", -- go formatter
+    "cpplint", -- C++ linter
   },
 }
 
