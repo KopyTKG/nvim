@@ -7,6 +7,34 @@ require("formatter").setup {
   log_level = vim.log.levels.WARN,
   -- Filetype-specific configurations
   filetype = {
+    c = {
+      -- Use clang-format for C files
+      function()
+        return {
+          exe = "clang-format",
+          args = {
+            "--style=file", -- Use the .clang-format file in the project root
+            "--assume-filename",
+            util.escape_path(util.get_current_buffer_file_path()),
+          },
+          stdin = true,
+        }
+      end,
+    },
+    cpp = {
+      -- Use clang-format for C++ files
+      function()
+        return {
+          exe = "clang-format",
+          args = {
+            "--style=file", -- Use the .clang-format file in the project root
+            "--assume-filename",
+            util.escape_path(util.get_current_buffer_file_path()),
+          },
+          stdin = true,
+        }
+      end,
+    },
     -- JavaScript, TypeScript, JSX, TSX, CJS using Prettier
     javascript = {
       function()

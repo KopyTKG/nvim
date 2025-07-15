@@ -1,14 +1,5 @@
 require "kopy.lazy"
 
-require("mason-tool-installer").setup {
-  ensure_installed = {
-    "prettier", -- prettier formatter
-    "stylua", -- lua formatter
-    "goimports", -- go formatter
-    "cpplint", -- C++ linter
-  },
-}
-
 -- Set relative line numbers
 vim.opt.relativenumber = true
 -- Set mouse to work in all modes
@@ -35,7 +26,7 @@ vim.opt.updatetime = 250
 -- Decrease mapped sequence wait time
 vim.opt.timeoutlen = 250
 
--- Split navigations
+-- Split avigations
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
