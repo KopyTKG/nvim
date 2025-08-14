@@ -63,7 +63,7 @@ require("lazy").setup {
       },
       ensure_installed = {
         "clang_format",
-        "prettier", -- prettier formatter
+        "prettierd", -- prettier formatter
         "stylua", -- lua formatter
         "goimports", -- go formatter
       },

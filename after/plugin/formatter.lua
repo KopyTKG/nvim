@@ -35,63 +35,13 @@ require("formatter").setup {
         }
       end,
     },
+
     -- JavaScript, TypeScript, JSX, TSX, CJS using Prettier
-    javascript = {
-      function()
-        return {
-          exe = "prettier",
-          args = {
-            "--config-file",
-            vim.fn.stdpath "config" .. "/formatter/prettier.config.js", -- Optional: Path to prettier.config.js
-            "--stdin-filepath",
-            util.escape_path(util.get_current_buffer_file_path()),
-          },
-          stdin = true,
-        }
-      end,
-    },
-    typescript = {
-      function()
-        return {
-          exe = "prettier",
-          args = {
-            "--config-file",
-            vim.fn.stdpath "config" .. "/formatter/prettier.config.js", -- Optional: Path to prettier.config.js
-            "--stdin-filepath",
-            util.escape_path(util.get_current_buffer_file_path()),
-          },
-          stdin = true,
-        }
-      end,
-    },
-    javascriptreact = {
-      function()
-        return {
-          exe = "prettier",
-          args = {
-            "--config-file",
-            vim.fn.stdpath "config" .. "/formatter/prettier.config.js", -- Optional: Path to prettier.config.js
-            "--stdin-filepath",
-            util.escape_path(util.get_current_buffer_file_path()),
-          },
-          stdin = true,
-        }
-      end,
-    },
-    typescriptreact = {
-      function()
-        return {
-          exe = "prettier",
-          args = {
-            "--config-file",
-            vim.fn.stdpath "config" .. "/formatter/prettier.config.js", -- Optional: Path to prettier.config.js
-            "--stdin-filepath",
-            util.escape_path(util.get_current_buffer_file_path()),
-          },
-          stdin = true,
-        }
-      end,
-    },
+    javascript = { prettier },
+    typescript = { prettier },
+    javascriptreact = { prettier },
+    typescriptreact = { prettier },
+    -- Lua files using Stylua
     lua = {
       -- Default stylua configuration
       require("formatter.filetypes.lua").stylua,
@@ -112,6 +62,8 @@ require("formatter").setup {
         }
       end,
     },
+
+    -- Golang files using goimports
     go = {
       function()
         return {
@@ -126,3 +78,13 @@ require("formatter").setup {
     },
   },
 }
+
+function prettier()
+  return {
+    exe = "prettierd",
+    args = {
+      util.escape_path(util.get_current_buffer_file_path()),
+    },
+    stdin = true,
+  }
+end
