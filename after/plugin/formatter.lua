@@ -1,5 +1,15 @@
 local util = require "formatter.util"
 
+function prettier()
+  return {
+    exe = "prettierd",
+    args = {
+      util.escape_path(util.get_current_buffer_file_path()),
+    },
+    stdin = true,
+  }
+end
+
 require("formatter").setup {
   -- Enable or disable logging
   logging = true,
@@ -78,13 +88,3 @@ require("formatter").setup {
     },
   },
 }
-
-function prettier()
-  return {
-    exe = "prettierd",
-    args = {
-      util.escape_path(util.get_current_buffer_file_path()),
-    },
-    stdin = true,
-  }
-end
