@@ -24,8 +24,39 @@ require("lazy").setup {
   "saadparwaiz1/cmp_luasnip",
   "rafamadriz/friendly-snippets",
   "hrsh7th/cmp-nvim-lsp",
-  "nvim-treesitter/nvim-treesitter",
   "mfussenegger/nvim-dap",
+  "WhoIsSethDaniel/mason-tool-installer.nvim",
+  "normen/vim-pio",
+  "github/copilot.vim",
+  {
+    "nvim-treesitter/nvim-treesitter",
+    config = function()
+      require("nvim-treesitter.configs").setup {
+        ensure_installed = {
+          "c",
+          "cpp",
+          "go",
+          "lua",
+          "python",
+          "rust",
+          "tsx",
+          "typescript",
+          "javascript",
+          "vimdoc",
+          "vim",
+        },
+        sync_install = false,
+        auto_install = true,
+        indent = { enable = true },
+        incremental_selection = { enable = true },
+        textobjects = { enable = true },
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = false,
+        },
+      }
+    end,
+  },
   {
     "mhartington/formatter.nvim",
     config = function()
@@ -38,10 +69,12 @@ require("lazy").setup {
     requires = { { "nvim-lua/plenary.nvim" } },
   },
   {
-    "catppuccin/nvim",
-    name = "catppuccin",
+    "folke/tokyonight.nvim",
+    lazy = false,
+    priority = 1000,
+    opts = {},
     config = function()
-      vim.cmd "colorscheme catppuccin"
+      vim.cmd "colorscheme tokyonight-night"
     end,
   },
   {
@@ -201,7 +234,4 @@ require("lazy").setup {
     end,
     ft = { "markdown" },
   },
-  "WhoIsSethDaniel/mason-tool-installer.nvim",
-  "normen/vim-pio",
-  "github/copilot.vim",
 }
