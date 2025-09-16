@@ -51,6 +51,11 @@ require("formatter").setup {
     typescript = { prettier },
     javascriptreact = { prettier },
     typescriptreact = { prettier },
+    json = { prettier },
+    css = { prettier },
+    scss = { prettier },
+    html = { prettier },
+    yaml = { prettier },
     -- Lua files using Stylua
     lua = {
       -- Default stylua configuration
