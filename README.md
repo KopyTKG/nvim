@@ -3,6 +3,10 @@ This is my personal NeoVIM configuration. It is a work in progress and will be u
 
 ## Prerequisites
 - [NeoVIM](https://neovim.io/)
+- [Golang](https://golang.org/dl/) (for gopls)
+- [Node.js](https://nodejs.org/en/download/) (for tsserver)
+- [NPM](https://www.npmjs.com/get-npm) (for tsserver)
+- [Lazygit](https://github.com/jesseduffield/lazygit) (for git integration)
 
 ## Plugins
 - [wbthomason/packer.nvim](https://github.com/wbthomason/packer.nvim)

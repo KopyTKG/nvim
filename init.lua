@@ -2,7 +2,7 @@ require "kopy.init"
 
 -- Highlight on yank
 vim.api.nvim_create_autocmd("TextYankPost", {
-	  desc = "Highlight on yank",
+  desc = "Highlight on yank",
   group = vim.api.nvim_create_augroup("Highlight on yank", {
     clear = true,
   }),
