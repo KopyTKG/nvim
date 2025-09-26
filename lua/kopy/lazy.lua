@@ -25,13 +25,12 @@ require("lazy").setup {
   "rafamadriz/friendly-snippets",
   "hrsh7th/cmp-nvim-lsp",
   "mfussenegger/nvim-dap",
-  "WhoIsSethDaniel/mason-tool-installer.nvim",
   "normen/vim-pio",
   "github/copilot.vim",
   {
     "nvim-treesitter/nvim-treesitter",
     config = function()
-      require("nvim-treesitter.configs").setup {
+      require("nvim-treesitter").setup {
         ensure_installed = {
           "c",
           "cpp",
@@ -94,23 +93,30 @@ require("lazy").setup {
           package_uninstalled = "✗",
         },
       },
-      ensure_installed = {
-        "clang_format",
-        "prettierd", -- prettier formatter
-        "stylua", -- lua formatter
-        "goimports", -- go formatter
-      },
     },
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    config = function()
+      local install_tool = require "mason-tool-installer"
+      install_tool.setup {
+        lazy = true,
+        ensure_installed = {
+          "clang-format",
+          "prettierd", -- prettier formatter
+          "stylua", -- lua formatter
+          "goimports", -- go formatter
+        },
+      }
+    end,
   },
   {
     "mason-org/mason-lspconfig.nvim",
     opts = {
       ensure_installed = {
         "lua_ls",
-        "rust_analyzer",
         "clangd",
         "gopls",
-        "pyright",
         "cmake",
         "ts_ls",
         "html",
@@ -118,11 +124,7 @@ require("lazy").setup {
         "eslint",
         "tailwindcss",
         "jsonls",
-        "pylsp",
         "vimls",
-        "ansiblels",
-        "ast_grep",
-        "harper_ls",
       },
     },
     dependencies = {
