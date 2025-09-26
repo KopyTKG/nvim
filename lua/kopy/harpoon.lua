@@ -5,13 +5,22 @@ local harpoon = require "harpoon"
 harpoon:setup()
 -- REQUIRED
 
-vim.keymap.set("n", "<C-a>", function()
+-- Add the current buffer to the list
+vim.keymap.set("n", "<leader>ha", function()
   harpoon:list():add()
 end)
-vim.keymap.set("n", "<C-e>", function()
+
+-- Remove a buffer from the list
+vim.keymap.set("n", "<leader>hr", function()
+  harpoon:list():remove()
+end)
+
+-- Toggle Harpoon quick menu
+vim.keymap.set("n", "<leader>hl", function()
   harpoon.ui:toggle_quick_menu(harpoon:list())
 end)
 
+-- Jump to a specific buffer in the list
 vim.keymap.set("n", "<leader>1", function()
   harpoon:list():select(1)
 end)
@@ -49,9 +58,4 @@ vim.keymap.set("n", "<F2>", function()
 end)
 vim.keymap.set("n", "<F3>", function()
   harpoon:list():next()
-end)
-
--- Remove a buffer from the list
-vim.keymap.set("n", "<C-d>", function()
-  harpoon:list():remove()
 end)

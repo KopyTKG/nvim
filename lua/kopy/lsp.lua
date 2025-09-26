@@ -27,3 +27,19 @@ vim.keymap.set(
   vim.diagnostic.open_float,
   { desc = "Open [E]rror diagnostics" }
 )
+
+-- [<leader>gd] Go to definition
+vim.keymap.set(
+  "n",
+  "<leader>gd",
+  vim.lsp.buf.definition,
+  { desc = "Go to [G]o [D]efinition" }
+)
+
+-- [<leader>gw] Show hover information
+vim.keymap.set(
+  "n",
+  "<leader>gw",
+  vim.lsp.buf.hover,
+  { desc = "Show [G]o [W]ord info" }
+)

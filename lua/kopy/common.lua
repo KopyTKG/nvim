@@ -8,8 +8,8 @@ vim.keymap.set("n", "<leader>s", [[:%s/<C-r><C-w>//g<Left><Left>]])
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
 
 -- Keymaps for commenting
-vim.keymap.set("n", "<C-b>", "gc", { desc = "Toggle line [C]omment" })
-vim.keymap.set("n", "<C-n>", "gb", { desc = "Toggle block [C]omment" })
+vim.keymap.set("n", "<leader>cl", "gc", { desc = "Toggle line [C]omment" })
+vim.keymap.set("n", "<leader>cb", "gb", { desc = "Toggle block [C]omment" })
 
 -- Code formater
 vim.keymap.set(
