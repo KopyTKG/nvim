@@ -28,7 +28,7 @@ require("lazy").setup {
   {
     "nvim-treesitter/nvim-treesitter",
     config = function()
-      require("nvim-treesitter").setup {
+      require("nvim-treesitter.configs").setup {
         ensure_installed = {
           "c",
           "cpp",
@@ -42,6 +42,7 @@ require("lazy").setup {
           "markdown",
           "vimdoc",
           "vim",
+          "prisma",
         },
         sync_install = false,
         auto_install = true,
@@ -276,6 +277,7 @@ require("lazy").setup {
         "pyright",
         "zk",
         "docker_language_server",
+        "prismals",
       },
     },
     dependencies = {
@@ -308,6 +310,7 @@ require("lazy").setup {
         "pyright",
         "zk",
         "docker_language_server",
+        "prismals",
       }
 
       -- Servers with custom configs (skip in generic setup)
