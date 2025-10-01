@@ -275,6 +275,7 @@ require("lazy").setup {
         "vimls",
         "pyright",
         "zk",
+        "docker_language_server",
       },
     },
     dependencies = {
@@ -305,6 +306,8 @@ require("lazy").setup {
         "jsonls",
         "vimls",
         "pyright",
+        "zk",
+        "docker_language_server",
       }
 
       -- Servers with custom configs (skip in generic setup)
