@@ -16,8 +16,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup {
   "wbthomason/packer.nvim",
   "nvim-lua/plenary.nvim",
-  "andweeb/presence.nvim",
-  "MunifTanjim/prettier.nvim",
   "tpope/vim-fugitive",
   "rhysd/vim-clang-format",
   "hrsh7th/nvim-cmp",
@@ -41,6 +39,7 @@ require("lazy").setup {
           "tsx",
           "typescript",
           "javascript",
+          "markdown",
           "vimdoc",
           "vim",
         },
@@ -57,10 +56,159 @@ require("lazy").setup {
     end,
   },
   {
+    "MunifTanjim/prettier.nvim",
+    config = function()
+      require("prettier").setup {
+        bin = "prettier",
+        filetypes = {
+          "css",
+          "graphql",
+          "html",
+          "javascript",
+          "javascriptreact",
+          "json",
+          "less",
+          "markdown",
+          "scss",
+          "typescript",
+          "typescriptreact",
+          "yaml",
+        },
+        ["null-ls"] = {
+          condition = function()
+            return prettier.config_exists {
+              -- if `false`, skips checking `package.json` for `"prettier"` key
+              check_package_json = true,
+            }
+          end,
+          runtime_condition = function(params)
+            -- return false to skip running prettier
+            return true
+          end,
+          timeout = 5000,
+        },
+        cli_options = {
+          arrow_parens = "always",
+          bracket_spacing = true,
+          bracket_same_line = false,
+          embedded_language_formatting = "auto",
+          end_of_line = "lf",
+          html_whitespace_sensitivity = "css",
+          jsx_bracket_same_line = true,
+          jsx_single_quote = true,
+          print_width = 80,
+          prose_wrap = "preserve",
+          quote_props = "as-needed",
+          semi = false,
+          single_attribute_per_line = false,
+          single_quote = true,
+          tab_width = 1,
+          trailing_comma = "all",
+          use_tabs = false,
+          vue_indent_script_and_style = false,
+        },
+      }
+    end,
+  },
+  {
     "mhartington/formatter.nvim",
     config = function()
-      require("formatter").setup {}
+      local util = require "formatter.util"
+
+      function prettier()
+        return {
+          exe = "prettierd",
+          args = {
+            util.escape_path(util.get_current_buffer_file_path()),
+          },
+          stdin = true,
+        }
+      end
+      require("formatter").setup {
+        -- Enable or disable logging
+        logging = true,
+        -- Set the log level
+        log_level = vim.log.levels.WARN,
+        -- Filetype-specific configurations
+        filetype = {
+          c = {
+            -- Use clang-format for C files
+            function()
+              return {
+                exe = "clang-format",
+                args = {
+                  "--style=file", -- Use the .clang-format file in the project root
+                  "--assume-filename",
+                  util.escape_path(util.get_current_buffer_file_path()),
+                },
+                stdin = true,
+              }
+            end,
+          },
+          cpp = {
+            -- Use clang-format for C++ files
+            function()
+              return {
+                exe = "clang-format",
+                args = {
+                  "--style=file", -- Use the .clang-format file in the project root
+                  "--assume-filename",
+                  util.escape_path(util.get_current_buffer_file_path()),
+                },
+                stdin = true,
+              }
+            end,
+          },
+
+          -- JavaScript, TypeScript, JSX, TSX, CJS using Prettier
+          javascript = { prettier },
+          typescript = { prettier },
+          javascriptreact = { prettier },
+          typescriptreact = { prettier },
+          json = { prettier },
+          css = { prettier },
+          scss = { prettier },
+          html = { prettier },
+          yaml = { prettier },
+          -- Lua files using Stylua
+          lua = {
+            -- Default stylua configuration
+            require("formatter.filetypes.lua").stylua,
+
+            -- Custom Stylua configuration
+            function()
+              return {
+                exe = "stylua",
+                args = {
+                  "--config-path",
+                  vim.fn.stdpath "config" .. "/formatter/stylua.toml",
+                  "--stdin-filepath",
+                  util.escape_path(util.get_current_buffer_file_path()),
+                  "--",
+                  "-",
+                },
+                stdin = true,
+              }
+            end,
+          },
+
+          -- Golang files using goimports
+          go = {
+            function()
+              return {
+                exe = "goimports",
+                args = {
+                  "-srcdir",
+                  util.get_current_buffer_file_path(), -- Specify the directory
+                },
+                stdin = true,
+              }
+            end,
+          },
+        },
+      }
     end,
+    requires = { "MunifTanjim/prettier.nvim" },
   },
   {
     "nvim-telescope/telescope.nvim",
@@ -125,6 +273,8 @@ require("lazy").setup {
         "tailwindcss",
         "jsonls",
         "vimls",
+        "pyright",
+        "zk",
       },
     },
     dependencies = {
@@ -137,35 +287,39 @@ require("lazy").setup {
     "neovim/nvim-lspconfig",
     dependencies = { "hrsh7th/cmp-nvim-lsp" },
     config = function()
-      local lspconfig = require "lspconfig"
+      local lspconfig_util = require "lspconfig.util"
       local cmp_nvim_lsp = require "cmp_nvim_lsp"
       local capabilities = cmp_nvim_lsp.default_capabilities()
 
       -- List of servers for default setup
       local servers = {
+        "lua_ls",
         "clangd",
         "gopls",
-        "rust_analyzer",
+        "cmake",
+        "ts_ls",
         "html",
         "texlab",
         "eslint",
         "tailwindcss",
         "jsonls",
-        "cmake",
-        "pylsp",
         "vimls",
-        "ansiblels",
+        "pyright",
       }
 
-      -- Default setup for most servers
+      -- Servers with custom configs (skip in generic setup)
+      local custom = { lua_ls = true, pyright = true, ts_ls = true }
+
+      -- Default setup for most servers using the new API
       for _, server in ipairs(servers) do
-        lspconfig[server].setup {
-          capabilities = capabilities,
-        }
+        if not custom[server] then
+          vim.lsp.config(server, { capabilities = capabilities })
+          vim.lsp.enable(server)
+        end
       end
 
       -- Custom setup for lua_ls
-      lspconfig.lua_ls.setup {
+      vim.lsp.config("lua_ls", {
         capabilities = capabilities,
         settings = {
           Lua = {
@@ -174,10 +328,11 @@ require("lazy").setup {
             },
           },
         },
-      }
+      })
+      vim.lsp.enable "lua_ls"
 
       -- Custom setup for pyright
-      lspconfig.pyright.setup {
+      vim.lsp.config("pyright", {
         settings = {
           python = {
             analysis = {
@@ -189,21 +344,21 @@ require("lazy").setup {
           },
         },
         capabilities = require("cmp_nvim_lsp").default_capabilities(),
-      }
+      })
+      vim.lsp.enable "pyright"
 
       -- Custom setup for ts_ls (prefer project with package.json)
-      lspconfig.ts_ls.setup {
+      vim.lsp.config("ts_ls", {
         root_dir = function(fname)
-          return lspconfig.util.root_pattern(
+          return lspconfig_util.root_pattern(
             "package.json",
             "tsconfig.json",
             "jsconfig.json"
-          )(fname) or lspconfig.util.find_git_ancestor(fname)
+          )(fname) or lspconfig_util.find_git_ancestor(fname)
         end,
         single_file_support = false,
-      }
-
-      -- You can add more custom server setups here...
+      })
+      vim.lsp.enable "ts_ls"
     end,
   },
 
@@ -228,11 +383,10 @@ require("lazy").setup {
   },
   {
     "iamcco/markdown-preview.nvim",
-    run = "cd app && npm install",
-    setup = function()
-      vim.g.mkdp_filetypes = {
-        "markdown",
-      }
+    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+    build = "cd app && bun install",
+    init = function()
+      vim.g.mkdp_filetypes = { "markdown" }
     end,
     ft = { "markdown" },
   },
