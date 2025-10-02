@@ -356,11 +356,24 @@ require("lazy").setup {
       -- Custom setup for ts_ls (prefer project with package.json)
       vim.lsp.config("ts_ls", {
         root_dir = function(fname)
-          return lspconfig_util.root_pattern(
+          -- Some callers pass a buffer number instead of a filename.
+          -- Coerce buffer number to a filename string when necessary.
+          if type(fname) ~= "string" then
+            fname = vim.api.nvim_buf_get_name(fname)
+            if fname == nil or fname == "" then
+              return nil
+            end
+          end
+
+          local root = lspconfig_util.root_pattern(
             "package.json",
             "tsconfig.json",
             "jsconfig.json"
-          )(fname) or lspconfig_util.find_git_ancestor(fname)
+          )(fname)
+          if root and root ~= vim.NIL then
+            return root
+          end
+          return lspconfig_util.find_git_ancestor(fname)
         end,
         single_file_support = false,
       })
