@@ -290,7 +290,6 @@ require("lazy").setup {
     "neovim/nvim-lspconfig",
     dependencies = { "hrsh7th/cmp-nvim-lsp" },
     config = function()
-      local lspconfig_util = require "lspconfig.util"
       local cmp_nvim_lsp = require "cmp_nvim_lsp"
       local capabilities = cmp_nvim_lsp.default_capabilities()
 
@@ -313,71 +312,11 @@ require("lazy").setup {
         "prismals",
       }
 
-      -- Servers with custom configs (skip in generic setup)
-      local custom = { lua_ls = true, pyright = true, ts_ls = true }
-
       -- Default setup for most servers using the new API
       for _, server in ipairs(servers) do
-        if not custom[server] then
-          vim.lsp.config(server, { capabilities = capabilities })
-          vim.lsp.enable(server)
-        end
+        vim.lsp.config(server, { capabilities = capabilities })
+        vim.lsp.enable(server)
       end
-
-      -- Custom setup for lua_ls
-      vim.lsp.config("lua_ls", {
-        capabilities = capabilities,
-        settings = {
-          Lua = {
-            diagnostics = {
-              globals = { "vim" },
-            },
-          },
-        },
-      })
-      vim.lsp.enable "lua_ls"
-
-      -- Custom setup for pyright
-      vim.lsp.config("pyright", {
-        settings = {
-          python = {
-            analysis = {
-              extrapaths = { "." },
-              autosearchpaths = true,
-              uselibrarycodefortypes = true,
-              diagnosticmode = "workspace",
-            },
-          },
-        },
-        capabilities = require("cmp_nvim_lsp").default_capabilities(),
-      })
-      vim.lsp.enable "pyright"
-
-      -- Custom setup for ts_ls (prefer project with package.json)
-      vim.lsp.config("ts_ls", {
-        root_dir = function(fname)
-          -- Some callers pass a buffer number instead of a filename.
-          -- Coerce buffer number to a filename string when necessary.
-          if type(fname) ~= "string" then
-            fname = vim.api.nvim_buf_get_name(fname)
-            if fname == nil or fname == "" then
-              return nil
-            end
-          end
-
-          local root = lspconfig_util.root_pattern(
-            "package.json",
-            "tsconfig.json",
-            "jsconfig.json"
-          )(fname)
-          if root and root ~= vim.NIL then
-            return root
-          end
-          return lspconfig_util.find_git_ancestor(fname)
-        end,
-        single_file_support = false,
-      })
-      vim.lsp.enable "ts_ls"
     end,
   },
 
