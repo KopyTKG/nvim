@@ -255,6 +255,7 @@ require("lazy").setup {
           "prettierd", -- prettier formatter
           "stylua", -- lua formatter
           "goimports", -- go formatter
+          "csharpier",
         },
       }
     end,
@@ -278,6 +279,7 @@ require("lazy").setup {
         "zk",
         "docker_language_server",
         "prismals",
+        "csharp_ls",
       },
     },
     dependencies = {
@@ -310,6 +312,7 @@ require("lazy").setup {
         "zk",
         "docker_language_server",
         "prismals",
+        "csharp_ls",
       }
 
       -- Default setup for most servers using the new API

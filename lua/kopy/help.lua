@@ -57,7 +57,7 @@ Leader Key: <Space>
  LSP
 ───────────────────────────────────────────────────────────────
   • Go to Definition       			 [<leader>gd]
-  • Show Hover Info        			 [<leader>gw]
+  • Show Hover Info        			  [<leader>k]
   • Show Diagnostics       			  [<leader>e]
   • Next Diagnostic        			  [<leader>d]
   • Previous Diagnostic    			  [<leader>a]
