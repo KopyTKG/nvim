@@ -39,7 +39,7 @@ vim.keymap.set(
 -- [<leader>gw] Show hover information
 vim.keymap.set(
   "n",
-  "<leader>k",
+  "<leader>g",
   vim.lsp.buf.hover,
   { desc = "Show [G]o [W]ord info" }
 )
