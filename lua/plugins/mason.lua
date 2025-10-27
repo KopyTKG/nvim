@@ -19,9 +19,9 @@ return {
         lazy = true,
         ensure_installed = {
           "clang-format", -- C/C++ formatter
-          "prettierd", -- prettier formatter
-          "stylua", -- lua formatter
-          "goimports", -- go formatter
+          "prettier", -- Prettier formatter
+          "stylua", -- Lua formatter
+          "goimports", -- Go formatter
           "csharpier", -- C# formatter
         },
       }
