@@ -40,7 +40,7 @@ return {
         end,
       },
       stylua = {
-        prepend_args = function(ctx)
+        prepend_args = function()
           return {
             "--config-path",
             vim.fn.expand "~/.config/nvim/formatter/stylua.toml",
