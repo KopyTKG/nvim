@@ -24,7 +24,7 @@ vim.opt.updatetime = 250
 -- Decrease mapped sequence wait time
 vim.opt.timeoutlen = 250
 
--- Split avigations
+-- Split navigations
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
