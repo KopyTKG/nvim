@@ -37,9 +37,6 @@ vim.g.netrw_liststyle = 0
 -- Enable true color support
 vim.o.termguicolors = true
 
--- Enable true color support
-vim.o.termguicolors = true
-
 -- Relative line numbers with cursor line number
 vim.opt.number = true
 vim.opt.cursorline = true
