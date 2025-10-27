@@ -1,6 +1,4 @@
-require "kopy.settings"
 require "kopy.git"
-require "kopy.lazy"
 require "kopy.lsp"
 require "kopy.splitscreen"
 require "kopy.harpoon"
