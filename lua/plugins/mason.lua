@@ -45,6 +45,7 @@ return {
         "pyright",
         "zk",
         "docker_language_server",
+        "copilot",
         "prismals",
         "csharp_ls",
       },

@@ -5,6 +5,7 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = { "hrsh7th/cmp-nvim-lsp" },
     config = function()
+      local lspconfig = require "lspconfig"
       local cmp_nvim_lsp = require "cmp_nvim_lsp"
       local capabilities = cmp_nvim_lsp.default_capabilities()
 
@@ -21,18 +22,28 @@ return {
         "tailwindcss",
         "jsonls",
         "vimls",
-        "pyright",
         "zk",
-        "docker_language_server",
         "prismals",
         "csharp_ls",
       }
 
       -- Default setup for most servers using the new API
       for _, server in ipairs(servers) do
-        vim.lsp.config(server, { capabilities = capabilities })
-        vim.lsp.enable(server)
+        lspconfig[server].setup { capabilities = capabilities }
       end
+
+      lspconfig.pyright.setup {
+        capabilities = capabilities,
+        settings = {
+          python = {
+            analysis = {
+              autoSearchPaths = true,
+              useLibraryCodeForTypes = true,
+              diagnosticMode = "workspace",
+            },
+          },
+        },
+      }
     end,
   },
 }
