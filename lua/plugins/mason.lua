@@ -23,6 +23,7 @@ return {
           "stylua", -- Lua formatter
           "goimports", -- Go formatter
           "csharpier", -- C# formatter
+          "black", -- Python formatter
         },
       }
     end,
