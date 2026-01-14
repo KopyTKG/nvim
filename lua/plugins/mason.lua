@@ -49,6 +49,7 @@ return {
         "copilot",
         "prismals",
         "csharp_ls",
+        "tombi",
       },
     },
     dependencies = {
