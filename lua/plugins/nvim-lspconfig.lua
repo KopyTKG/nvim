@@ -15,10 +15,8 @@ return {
         "clangd",
         "gopls",
         "cmake",
-        "ts_ls",
         "html",
         "texlab",
-        "eslint",
         "tailwindcss",
         "jsonls",
         "vimls",
@@ -32,6 +30,18 @@ return {
         lspconfig[server].setup { capabilities = capabilities }
       end
 
+      -- TypeScript LSP - exclude Svelte files
+      lspconfig.ts_ls.setup {
+        capabilities = capabilities,
+        filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+      }
+
+      -- ESLint - exclude Svelte files
+      lspconfig.eslint.setup {
+        capabilities = capabilities,
+        filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+      }
+
       lspconfig.pyright.setup {
         capabilities = capabilities,
         settings = {
@@ -43,6 +53,53 @@ return {
             },
           },
         },
+      }
+
+      lspconfig.svelte.setup {
+        capabilities = capabilities,
+        filetypes = { "svelte" },
+        root_dir = lspconfig.util.root_pattern("svelte.config.js", "svelte.config.cjs", "package.json"),
+        settings = {
+          svelte = {
+            plugin = {
+              typescript = {
+                enable = true,
+                diagnostics = { enable = true },
+              },
+              css = {
+                enable = true,
+                diagnostics = { enable = true },
+              },
+              html = {
+                enable = true,
+                completions = { enable = true, emmet = true },
+              },
+              svelte = {
+                compilerWarnings = {
+                  ["a11y-accesskey"] = "ignore",
+                  ["a11y-invalid-attribute"] = "ignore",
+                },
+                defaultScriptLanguage = "ts",
+                -- Enable Svelte 5 support
+                useNewTransformation = true,
+              },
+            },
+          },
+        },
+        init_options = {
+          configuration = {
+            typescript = {
+              -- Allow .svelte files that aren't explicitly in tsconfig
+              preferences = {
+                allowNonTsExtensions = true,
+              },
+            },
+          },
+        },
+        on_attach = function(client, bufnr)
+          -- Disable semantic tokens for Svelte (can cause highlighting issues)
+          client.server_capabilities.semanticTokensProvider = nil
+        end,
       }
     end,
   },

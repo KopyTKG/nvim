@@ -21,6 +21,7 @@ return {
       sh = { "shfmt" },
       markdown = { "prettier", "prettierd", stop_after_first = true },
       python = { "black", stop_after_first = true },
+      svelte = { "prettier", "prettierd", stop_after_first = true },
     },
     default_format_opts = {
       lsp_format = "fallback",
@@ -37,6 +38,8 @@ return {
             vim.fn.expand "~/.config/nvim/formatter/.prettierrc",
             "--config-precedence",
             "cli-override",
+            "--plugin",
+            "prettier-plugin-svelte",
           }
         end,
       },

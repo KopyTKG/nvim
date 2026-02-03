@@ -21,6 +21,9 @@ cmp.setup {
     {
       name = "nvim_lsp",
     },
+    {
+      name = "codeium",
+    },
   }, {
     {
       name = "buffer",

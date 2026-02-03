@@ -18,3 +18,22 @@ vim.keymap.set(
   ":FormatWrite<CR>",
   { noremap = true, silent = true }
 )
+
+-- Claude Code Integration
+vim.keymap.set("n", "<leader>co", ":terminal claude<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Open Claude Code",
+})
+
+vim.keymap.set("n", "<leader>cop", ":terminal claude --model opus<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Open Claude Code with Opus",
+})
+
+vim.keymap.set("n", "<leader>coh", ":terminal claude --model haiku<CR>", {
+  noremap = true,
+  silent = true,
+  desc = "Open Claude Code with Haiku",
+})

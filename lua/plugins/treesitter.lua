@@ -20,6 +20,7 @@ return {
           "vimdoc",
           "vim",
           "prisma",
+          "svelte",
         },
         sync_install = false,
         auto_install = true,

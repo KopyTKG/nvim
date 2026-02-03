@@ -12,6 +12,7 @@ Sections:
   5. LSP
   6. GIT
   7. Netrw
+  8. AI Tools
 
 Leader Key: <Space>
 
@@ -76,6 +77,20 @@ Leader Key: <Space>
   • Create directory       				  [d]
   • Rename file            			      [<C-r>]
   • Delete                 			   	  [D]
+
+═══════════════════════════════════════════════════════════════
+ AI TOOLS
+───────────────────────────────────────────────────────────────
+  Codeium (AI Autocomplete):
+  • Accept suggestion      			   	 [Tab]
+  • Next suggestion        			   [Ctrl+n]
+  • Prev suggestion        			   [Ctrl+p]
+  • Dismiss                			   [Ctrl+e]
+
+  Claude Code (AI Assistant):
+  • Open Claude Code       			 [<Leader>co]
+  • Open with Opus Model   			[<Leader>cop]
+  • Open with Haiku Model  			[<Leader>coh]
 
 Press 'q' or <Esc> to close this help.
   ]]
