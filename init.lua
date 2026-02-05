@@ -76,28 +76,4 @@ vim.api.nvim_set_keymap(
   { noremap = true, silent = true }
 )
 
--- Ensure treesitter highlighting enabled for new buffers (covers Telescope previews)
-vim.api.nvim_create_autocmd({
-  "BufReadPost",
-  "BufNewFile",
-  "FileType",
-  "BufEnter",
-  "BufWinEnter",
-  "VimEnter",
-}, {
-  callback = function()
-    -- If TSBufEnable command exists, call it
-    if vim.fn.exists ":TSBufEnable" == 2 then
-      pcall(vim.cmd, "TSBufEnable highlight")
-      return
-    end
-
-    -- Otherwise, attempt to enable when a parser exists for this buffer
-    pcall(function()
-      local ok, parser = pcall(vim.treesitter.get_parser, 0)
-      if ok and parser then
-        pcall(vim.cmd, "TSBufEnable highlight")
-      end
-    end)
-  end,
-})
+-- Treesitter initializes properly on its own - no manual re-enabling needed

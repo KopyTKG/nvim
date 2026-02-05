@@ -24,7 +24,7 @@ return {
       svelte = { "prettier", "prettierd", stop_after_first = true },
     },
     default_format_opts = {
-      lsp_format = "fallback",
+      lsp_format = "never",
     },
     format_on_save = { timeout_ms = 500 },
     formatters = {
@@ -32,15 +32,21 @@ return {
         append_args = { "-i", "2" },
       },
       prettier = {
-        prepend_args = function()
-          return {
+        prepend_args = function(self, ctx)
+          local args = {
             "--config",
             vim.fn.expand "~/.config/nvim/formatter/.prettierrc",
             "--config-precedence",
             "cli-override",
-            "--plugin",
-            "prettier-plugin-svelte",
           }
+
+          -- Only load svelte plugin for actual Svelte files
+          if vim.bo[ctx.buf].filetype == "svelte" then
+            table.insert(args, "--plugin")
+            table.insert(args, "prettier-plugin-svelte")
+          end
+
+          return args
         end,
       },
       stylua = {

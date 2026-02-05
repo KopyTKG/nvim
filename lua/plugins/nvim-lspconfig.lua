@@ -63,8 +63,8 @@ return {
           svelte = {
             plugin = {
               typescript = {
-                enable = true,
-                diagnostics = { enable = true },
+                -- Completely disable TS integration to prevent memory leaks
+                enable = false,
               },
               css = {
                 enable = true,
@@ -72,7 +72,7 @@ return {
               },
               html = {
                 enable = true,
-                completions = { enable = true, emmet = true },
+                completions = { enable = true, emmet = false },
               },
               svelte = {
                 compilerWarnings = {
@@ -80,26 +80,21 @@ return {
                   ["a11y-invalid-attribute"] = "ignore",
                 },
                 defaultScriptLanguage = "ts",
-                -- Enable Svelte 5 support
-                useNewTransformation = true,
-              },
-            },
-          },
-        },
-        init_options = {
-          configuration = {
-            typescript = {
-              -- Allow .svelte files that aren't explicitly in tsconfig
-              preferences = {
-                allowNonTsExtensions = true,
               },
             },
           },
         },
         on_attach = function(client, bufnr)
-          -- Disable semantic tokens for Svelte (can cause highlighting issues)
+          -- Aggressively disable problematic features
           client.server_capabilities.semanticTokensProvider = nil
+          client.server_capabilities.documentFormattingProvider = false
+          client.server_capabilities.documentRangeFormattingProvider = false
+          client.server_capabilities.documentHighlightProvider = false
+          client.server_capabilities.codeLensProvider = nil
         end,
+        flags = {
+          debounce_text_changes = 500, -- Increased from 300ms
+        },
       }
     end,
   },
