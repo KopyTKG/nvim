@@ -1,13 +1,11 @@
 ---@class MasonSettings
-require("mason").setup()
-local DEFAULT_SETTINGS = {
+require("mason").setup({
   ---@since 1.0.0
   -- The directory in which to install packages.
   -- install_root_dir = path.concat { vim.fn.stdpath "data", "mason" },
 
   ---@since 1.0.0
   -- Where Mason should put its bin location in your PATH. Can be one of:
-  -- require("mason").setup(),
   -- - "prepend" (default, Mason's bin location is put first in PATH)
   -- - "append" (Mason's bin location is put at the end of PATH)
   -- - "skip" (doesn't modify PATH)
@@ -136,4 +134,4 @@ local DEFAULT_SETTINGS = {
       toggle_help = "g?",
     },
   },
-}
+})
