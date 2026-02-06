@@ -5,9 +5,14 @@ return {
     "neovim/nvim-lspconfig",
     dependencies = { "hrsh7th/cmp-nvim-lsp" },
     config = function()
-      local lspconfig = require "lspconfig"
       local cmp_nvim_lsp = require "cmp_nvim_lsp"
       local capabilities = cmp_nvim_lsp.default_capabilities()
+
+      -- Configure global defaults for all LSP servers
+      vim.lsp.config("*", {
+        capabilities = capabilities,
+        root_markers = { ".git" },
+      })
 
       -- List of servers for default setup
       local servers = {
@@ -25,25 +30,25 @@ return {
         "csharp_ls",
       }
 
-      -- Default setup for most servers using the new API
+      -- Enable all default servers
       for _, server in ipairs(servers) do
-        lspconfig[server].setup { capabilities = capabilities }
+        vim.lsp.enable(server)
       end
 
       -- TypeScript LSP - exclude Svelte files
-      lspconfig.ts_ls.setup {
-        capabilities = capabilities,
+      vim.lsp.config("ts_ls", {
         filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-      }
+      })
+      vim.lsp.enable("ts_ls")
 
       -- ESLint - exclude Svelte files
-      lspconfig.eslint.setup {
-        capabilities = capabilities,
+      vim.lsp.config("eslint", {
         filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
-      }
+      })
+      vim.lsp.enable("eslint")
 
-      lspconfig.pyright.setup {
-        capabilities = capabilities,
+      -- Pyright with custom settings
+      vim.lsp.config("pyright", {
         settings = {
           python = {
             analysis = {
@@ -53,12 +58,13 @@ return {
             },
           },
         },
-      }
+      })
+      vim.lsp.enable("pyright")
 
-      lspconfig.svelte.setup {
-        capabilities = capabilities,
+      -- Svelte LSP with custom configuration
+      vim.lsp.config("svelte", {
         filetypes = { "svelte" },
-        root_dir = lspconfig.util.root_pattern("svelte.config.js", "svelte.config.cjs", "package.json"),
+        root_markers = { "svelte.config.js", "svelte.config.cjs", "package.json" },
         settings = {
           svelte = {
             plugin = {
@@ -84,18 +90,26 @@ return {
             },
           },
         },
-        on_attach = function(client, bufnr)
-          -- Aggressively disable problematic features
-          client.server_capabilities.semanticTokensProvider = nil
-          client.server_capabilities.documentFormattingProvider = false
-          client.server_capabilities.documentRangeFormattingProvider = false
-          client.server_capabilities.documentHighlightProvider = false
-          client.server_capabilities.codeLensProvider = nil
-        end,
         flags = {
           debounce_text_changes = 500, -- Increased from 300ms
         },
-      }
+      })
+      vim.lsp.enable("svelte")
+
+      -- Handle Svelte LSP attach with autocommand
+      vim.api.nvim_create_autocmd("LspAttach", {
+        callback = function(ev)
+          local client = vim.lsp.get_client_by_id(ev.data.client_id)
+          if client and client.name == "svelte" then
+            -- Aggressively disable problematic features for Svelte
+            client.server_capabilities.semanticTokensProvider = nil
+            client.server_capabilities.documentFormattingProvider = false
+            client.server_capabilities.documentRangeFormattingProvider = false
+            client.server_capabilities.documentHighlightProvider = false
+            client.server_capabilities.codeLensProvider = nil
+          end
+        end,
+      })
     end,
   },
 }
