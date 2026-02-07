@@ -5,7 +5,6 @@
     "quoteProps": "consistent",
     "singleQuote": false,
     "tabWidth": 2,
-    "plugins": ["prettier-plugin-svelte"],
     "overrides": [
         {
             "files": "*.svelte",
