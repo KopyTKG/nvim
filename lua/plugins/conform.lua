@@ -22,13 +22,14 @@ return {
       markdown = { "prettier", "prettierd", stop_after_first = true },
       python = { "black", stop_after_first = true },
       svelte = { "prettier", "prettierd", stop_after_first = true },
-      cs = { "csharpier" },
+      cs = { "csharpier", lsp_format = "fallback" },
       tex = { "latexindent" },
     },
     default_format_opts = {
       lsp_format = "never",
     },
     format_on_save = { timeout_ms = 500 },
+    notify_on_error = false,
     formatters = {
       shfmt = {
         append_args = { "-i", "2" },
