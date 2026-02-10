@@ -22,6 +22,8 @@ return {
       markdown = { "prettier", "prettierd", stop_after_first = true },
       python = { "black", stop_after_first = true },
       svelte = { "prettier", "prettierd", stop_after_first = true },
+      cs = { "csharpier" },
+      tex = { "latexindent" },
     },
     default_format_opts = {
       lsp_format = "never",

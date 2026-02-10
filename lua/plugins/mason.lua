@@ -24,6 +24,7 @@ return {
           "goimports", -- Go formatter
           "csharpier", -- C# formatter
           "black", -- Python formatter
+          "latexindent", -- LaTeX formatter
         },
       }
     end,
@@ -47,7 +48,7 @@ return {
         "zk",
         "docker_language_server",
         "prismals",
-        "csharp_ls",
+        "omnisharp",
         "tombi",
         "svelte",
       },

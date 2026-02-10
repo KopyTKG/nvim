@@ -27,7 +27,7 @@ return {
         "vimls",
         "zk",
         "prismals",
-        "csharp_ls",
+        "omnisharp",
       }
 
       -- Enable all default servers
