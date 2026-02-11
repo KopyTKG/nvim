@@ -51,6 +51,7 @@ return {
         "omnisharp",
         "tombi",
         "svelte",
+        "cssls",
       },
     },
     dependencies = {

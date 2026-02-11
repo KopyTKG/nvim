@@ -28,6 +28,7 @@ return {
         "zk",
         "prismals",
         "omnisharp",
+        "cssls",
       }
 
       -- Enable all default servers
