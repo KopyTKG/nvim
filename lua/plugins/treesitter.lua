@@ -22,6 +22,7 @@ return {
           "prisma",
           "svelte",
           "c_sharp",
+          "graphql",
         },
         sync_install = false,
         auto_install = true,

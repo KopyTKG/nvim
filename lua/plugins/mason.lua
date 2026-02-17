@@ -52,6 +52,7 @@ return {
         "tombi",
         "svelte",
         "cssls",
+        "graphql",
       },
     },
     dependencies = {

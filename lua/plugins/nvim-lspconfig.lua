@@ -97,6 +97,12 @@ return {
       })
       vim.lsp.enable("svelte")
 
+      -- GraphQL LSP - include svelte for gql blocks
+      vim.lsp.config("graphql", {
+        filetypes = { "graphql", "typescriptreact", "javascriptreact", "svelte" },
+      })
+      vim.lsp.enable("graphql")
+
       -- Handle Svelte LSP attach with autocommand
       vim.api.nvim_create_autocmd("LspAttach", {
         callback = function(ev)

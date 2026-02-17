@@ -24,6 +24,7 @@ return {
       svelte = { "prettier", "prettierd", stop_after_first = true },
       cs = { "csharpier", lsp_format = "fallback" },
       tex = { "latexindent" },
+      graphql = { "prettier", "prettierd", stop_after_first = true },
     },
     default_format_opts = {
       lsp_format = "never",
