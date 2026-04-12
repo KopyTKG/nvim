@@ -23,6 +23,7 @@ return {
           "svelte",
           "c_sharp",
           "graphql",
+          "zig",
         },
         sync_install = false,
         auto_install = true,
