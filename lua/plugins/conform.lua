@@ -25,6 +25,7 @@ return {
       cs = { "csharpier", lsp_format = "fallback" },
       tex = { "latexindent" },
       graphql = { "prettier", "prettierd", stop_after_first = true },
+      zig = { "zigfmt" },
     },
     default_format_opts = {
       lsp_format = "never",
