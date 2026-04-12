@@ -5,26 +5,9 @@ return {
     branch = "master",
     build = ":TSUpdate",
     config = function()
+      local languages = require "config.languages"
       require("nvim-treesitter.configs").setup {
-        ensure_installed = {
-          "c",
-          "cpp",
-          "go",
-          "lua",
-          "python",
-          "rust",
-          "tsx",
-          "typescript",
-          "javascript",
-          "markdown",
-          "vimdoc",
-          "vim",
-          "prisma",
-          "svelte",
-          "c_sharp",
-          "graphql",
-          "zig",
-        },
+        ensure_installed = languages.treesitter,
         sync_install = false,
         auto_install = true,
         indent = { enable = true },

@@ -7,6 +7,7 @@ return {
     config = function()
       local cmp_nvim_lsp = require "cmp_nvim_lsp"
       local capabilities = cmp_nvim_lsp.default_capabilities()
+      local languages = require "config.languages"
 
       -- Configure global defaults for all LSP servers
       vim.lsp.config("*", {
@@ -14,52 +15,15 @@ return {
         root_markers = { ".git" },
       })
 
-      -- List of servers for default setup
-      local servers = {
-        "lua_ls",
-        "clangd",
-        "gopls",
-        "cmake",
-        "html",
-        "texlab",
-        "tailwindcss",
-        "jsonls",
-        "vimls",
-        "zk",
-        "prismals",
-        "omnisharp",
-        "cssls",
-        "zls",
-      }
-
-      -- Enable all default servers
-      for _, server in ipairs(servers) do
-        vim.lsp.enable(server)
-      end
-
-      -- TypeScript LSP - exclude Svelte files
+      -- Custom server configs (applied before enable)
       vim.lsp.config("ts_ls", {
-        filetypes = {
-          "javascript",
-          "javascriptreact",
-          "typescript",
-          "typescriptreact",
-        },
+        filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
       })
-      vim.lsp.enable "ts_ls"
 
-      -- ESLint - exclude Svelte files
       vim.lsp.config("eslint", {
-        filetypes = {
-          "javascript",
-          "javascriptreact",
-          "typescript",
-          "typescriptreact",
-        },
+        filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
       })
-      vim.lsp.enable "eslint"
 
-      -- Pyright with custom settings
       vim.lsp.config("pyright", {
         settings = {
           python = {
@@ -71,31 +35,16 @@ return {
           },
         },
       })
-      vim.lsp.enable "pyright"
 
-      -- Svelte LSP with custom configuration
       vim.lsp.config("svelte", {
         filetypes = { "svelte" },
-        root_markers = {
-          "svelte.config.js",
-          "svelte.config.cjs",
-          "package.json",
-        },
+        root_markers = { "svelte.config.js", "svelte.config.cjs", "package.json" },
         settings = {
           svelte = {
             plugin = {
-              typescript = {
-                -- Completely disable TS integration to prevent memory leaks
-                enable = false,
-              },
-              css = {
-                enable = true,
-                diagnostics = { enable = true },
-              },
-              html = {
-                enable = true,
-                completions = { enable = true, emmet = false },
-              },
+              typescript = { enable = false },
+              css = { enable = true, diagnostics = { enable = true } },
+              html = { enable = true, completions = { enable = true, emmet = false } },
               svelte = {
                 compilerWarnings = {
                   ["a11y-accesskey"] = "ignore",
@@ -106,22 +55,17 @@ return {
             },
           },
         },
-        flags = {
-          debounce_text_changes = 500, -- Increased from 300ms
-        },
+        flags = { debounce_text_changes = 500 },
       })
-      vim.lsp.enable "svelte"
 
-      -- GraphQL LSP - include svelte for gql blocks
       vim.lsp.config("graphql", {
-        filetypes = {
-          "graphql",
-          "typescriptreact",
-          "javascriptreact",
-          "svelte",
-        },
+        filetypes = { "graphql", "typescriptreact", "javascriptreact", "svelte" },
       })
-      vim.lsp.enable "graphql"
+
+      -- Enable all servers from the central config
+      for _, server in ipairs(languages.lsp_servers) do
+        vim.lsp.enable(server)
+      end
 
       -- Handle Svelte LSP attach with autocommand
       vim.api.nvim_create_autocmd("LspAttach", {

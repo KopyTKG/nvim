@@ -1,3 +1,5 @@
+local languages = require "config.languages"
+
 return {
   {
     "mason-org/mason.nvim",
@@ -14,46 +16,16 @@ return {
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     config = function()
-      local install_tool = require "mason-tool-installer"
-      install_tool.setup {
+      require("mason-tool-installer").setup {
         lazy = true,
-        ensure_installed = {
-          "clang-format", -- C/C++ formatter
-          "prettier", -- Prettier formatter
-          "stylua", -- Lua formatter
-          "goimports", -- Go formatter
-          "csharpier", -- C# formatter
-          "black", -- Python formatter
-          "latexindent", -- LaTeX formatter
-        },
+        ensure_installed = languages.formatters,
       }
     end,
   },
   {
     "mason-org/mason-lspconfig.nvim",
     opts = {
-      ensure_installed = {
-        "lua_ls",
-        "clangd",
-        "gopls",
-        "cmake",
-        "ts_ls",
-        "html",
-        "texlab",
-        "eslint",
-        "tailwindcss",
-        "jsonls",
-        "vimls",
-        "pyright",
-        "zk",
-        "docker_language_server",
-        "prismals",
-        "omnisharp",
-        "tombi",
-        "svelte",
-        "cssls",
-        "graphql",
-      },
+      ensure_installed = languages.lsp_servers,
     },
     dependencies = {
       { "mason-org/mason.nvim", opts = {} },

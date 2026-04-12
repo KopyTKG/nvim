@@ -40,17 +40,16 @@ This is a personal Neovim configuration using Lazy.nvim as the plugin manager. T
   - `netrw.lua` - Netrw file explorer keybindings
   - `common.lua` - Common editor keybindings
 
+**Central Language Config:**
+- `lua/config/languages.lua` - Single source of truth for LSP servers, formatters, and treesitter parsers. Mason, lspconfig, conform, and treesitter all read from this file.
+
 **Special Configuration:**
 - `after/plugin/mason.lua` - Mason LSP/formatter installer configuration (loaded after plugins)
 - `after/plugin/completions.lua` - nvim-cmp completion setup (loaded after plugins)
 
 ### LSP and Tooling
 
-**Language Servers (auto-installed via Mason):**
-- lua_ls, clangd, gopls, cmake, ts_ls, html, texlab, eslint, tailwindcss, jsonls, vimls, pyright, zk, docker_language_server, copilot, prismals, csharp_ls, tombi
-
-**Formatters (auto-installed via Mason):**
-- clang-format, prettier, stylua, goimports, csharpier, black
+**Language servers, formatters, and treesitter parsers** are all defined in `lua/config/languages.lua`. To add a new language, update that single file.
 
 **Formatting:**
 - Uses `conform.nvim` for automatic formatting on save
@@ -112,8 +111,8 @@ When modifying this configuration:
 
 1. **Adding new plugins**: Create a new file in `lua/plugins/` that returns a table with the plugin spec
 2. **Adding new keybindings**: Add them to the appropriate module in `lua/kopy/` and update the help menu in `lua/kopy/help.lua`
-3. **LSP configuration**: Modify `lua/plugins/nvim-lspconfig.lua` and ensure the language server is in the `ensure_installed` list in `lua/plugins/mason.lua`
-4. **Formatter configuration**: Add to `formatters_by_ft` in `lua/plugins/conform.lua` and ensure the formatter is in the `ensure_installed` list in `lua/plugins/mason.lua`
+3. **Adding a new language**: Add the LSP server, formatter, and treesitter parser to `lua/config/languages.lua`. If the LSP needs custom config, add it in `lua/plugins/nvim-lspconfig.lua`. If the formatter needs custom config, add it in `lua/plugins/conform.lua`.
+4. **Formatter configuration**: Add to `formatters_by_ft` in `lua/plugins/conform.lua` and add the formatter to `lua/config/languages.lua`
 5. **After-plugin configs**: Only use `after/plugin/` for configurations that must load after all plugins are initialized (like completions and mason setup)
 
 ## Important Notes
