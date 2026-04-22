@@ -22,6 +22,10 @@ return {
 
       vim.lsp.config("eslint", {
         filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+        root_markers = {
+          "eslint.config.js", "eslint.config.mjs", "eslint.config.cjs", "eslint.config.ts",
+          ".eslintrc", ".eslintrc.js", ".eslintrc.cjs", ".eslintrc.json", ".eslintrc.yml", ".eslintrc.yaml",
+        },
       })
 
       vim.lsp.config("pyright", {
