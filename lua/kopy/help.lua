@@ -6,43 +6,52 @@ function HelpPopup()
 
 Sections:
   1. Common
-  2. Telescope
-  3. Harpoon
+  2. FZF-Lua
+  3. DAP (Debug)
   4. Split Screen
   5. LSP
-  6. GIT
-  7. Netrw
-  8. AI Tools
+  6. Git (Lazygit + Gitsigns)
+  7. Oil (File Explorer)
+  8. Trouble (Diagnostics)
+  9. AI Tools
+
+Tip: type <Leader> and pause — which-key shows all available keys.
 
 Leader Key: <Space>
 
 ═══════════════════════════════════════════════════════════════
  COMMON
 ───────────────────────────────────────────────────────────────
-  • Open File Explorer      	 		  [<Leader>e]
   • Save File              	 		  [<Leader>w]
   • Search & Replace       	 		  [<Leader>s]
-  • Comment Line           	 		 [<Leader>cl]
-  • Comment Block          	 		 [<Leader>cb]
   • Format Code            	 		  [<Leader>f]
 
 ═══════════════════════════════════════════════════════════════
- TELESCOPE
+ FZF-LUA
 ───────────────────────────────────────────────────────────────
   • Find Files             			 [<Leader>ff]
   • Find Git Files         			 [<Leader>fg]
-  • Grep for word          			 [<Leader>gw]
+  • Live Grep (project)    			 [<Leader>gw]
   • Search current word    			 [<Leader>fw]
+  • Find Buffers           			 [<Leader>fb]
+  • Find Recent Files      			 [<Leader>fr]
+  • Find Help Tags         			 [<Leader>fh]
+  • Find Keymaps           			 [<Leader>fk]
+  • Find Diagnostics       			 [<Leader>fd]
 
 ═══════════════════════════════════════════════════════════════
- HARPOON
+ DAP (DEBUG)
 ───────────────────────────────────────────────────────────────
-  • Add file to Harpoon        			 [<Leader>ha]
-  • Remove file from Harpoon   			 [<Leader>hr]
-  • Toggle Harpoon menu        			 [<Leader>hl]
-  • Jump to file 1-10          		        [<Leader>1-0]
-  • Previous Harpoon file      				 [F2]
-  • Next Harpoon file          				 [F3]
+  • Continue / Start         				 [F5]
+  • Step Over                			        [F10]
+  • Step Into                			        [F11]
+  • Step Out                 			        [F12]
+  • Toggle Breakpoint        			 [<Leader>db]
+  • Conditional Breakpoint   			 [<Leader>dB]
+  • Toggle REPL              			 [<Leader>dr]
+  • Toggle DAP UI            			 [<Leader>du]
+  • Terminate Session        			 [<Leader>dt]
+  • Eval Expression          			 [<Leader>de]
 
 ═══════════════════════════════════════════════════════════════
  SPLIT SCREEN
@@ -65,18 +74,51 @@ Leader Key: <Space>
   • Show all diagnostics   			  [<leader>q]
 
 ═══════════════════════════════════════════════════════════════
- GIT
+ GIT (LAZYGIT + GITSIGNS)
 ───────────────────────────────────────────────────────────────
-  • Open Lazygit           				[F12]
+  Lazygit:
+  • Open Lazygit           			 [<Leader>lz]
+
+  Gitsigns (in-buffer):
+  • Next hunk              				 []c]
+  • Prev hunk              				 [[c]
+  • Preview hunk           			 [<Leader>gp]
+  • Stage hunk             			 [<Leader>gs]
+  • Reset hunk             			 [<Leader>gr]
+  • Undo stage hunk        			 [<Leader>gu]
+  • Stage buffer           			 [<Leader>gS]
+  • Reset buffer           			 [<Leader>gR]
+  • Blame line (full)      			 [<Leader>gb]
+  • Toggle line blame      			 [<Leader>gB]
+  • Diff this              			 [<Leader>gd]
 
 ═══════════════════════════════════════════════════════════════
- NETRW
+ OIL (FILE EXPLORER)
 ───────────────────────────────────────────────────────────────
-  • Open Netrw             			 [<Leader>pv]
-  • Create file            	 		  [<leader>f]
-  • Create directory       				  [d]
-  • Rename file            			      [<C-r>]
-  • Delete                 			   	  [D]
+  • Open parent directory  			 		[-]
+  • Open parent (alt)      			 [<Leader>pv]
+  • Open in floating win   			  [<Leader>e]
+  In Oil buffer:
+  • Select / Enter         			      [<CR>]
+  • Open in vsplit         			     [<C-s>]
+  • Open in hsplit         			     [<C-h>]
+  • Preview                			     [<C-p>]
+  • Close                  			     [<C-c>]
+  • Refresh                			     [<C-r>]
+  • Parent dir             			 		[-]
+  • CD to dir              			 		[`]
+  • Toggle hidden          			       [g.]
+  • Help                   			       [g?]
+
+═══════════════════════════════════════════════════════════════
+ TROUBLE (DIAGNOSTICS)
+───────────────────────────────────────────────────────────────
+  • Workspace diagnostics  			 [<Leader>xx]
+  • Buffer diagnostics     			 [<Leader>xX]
+  • Document symbols       			 [<Leader>xs]
+  • LSP defs/refs          			 [<Leader>xl]
+  • Location list          			 [<Leader>xL]
+  • Quickfix list          			 [<Leader>xQ]
 
 ═══════════════════════════════════════════════════════════════
  AI TOOLS

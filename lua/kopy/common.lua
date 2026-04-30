@@ -1,5 +1,3 @@
--- [<leader>pv] to open netrw
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 -- [<leader>w] Save file
 vim.keymap.set("n", "<leader>w", vim.cmd.w)
 -- [<leader>s] Regex search and replace for current word under cursor

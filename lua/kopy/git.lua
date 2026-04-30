@@ -47,8 +47,4 @@ vim.opt.statusline = statusline()
 -- Display statusline always
 vim.opt.laststatus = 2
 
--- Keymaps for external programs
-vim.keymap.set("n", "<F12>", function()
-  vim.cmd "terminal lazygit"
-  vim.cmd "startinsert"
-end, { noremap = true, silent = true })
+-- Lazygit keymap is defined by the lazygit.nvim plugin (lua/plugins/lazygit.lua).
