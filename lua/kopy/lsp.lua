@@ -28,18 +28,17 @@ vim.keymap.set(
   { desc = "Open [E]rror diagnostics" }
 )
 
--- [<leader>gd] Go to definition
-vim.keymap.set(
-  "n",
-  "<leader>gd",
-  vim.lsp.buf.definition,
-  { desc = "Go to [G]o [D]efinition" }
-)
+-- LSP go-to family — piped through fzf-lua so multiple results show as a
+-- searchable picker with previews (instead of nvim's default location list).
+local fzf = require "fzf-lua"
 
--- [<leader>gw] Show hover information
-vim.keymap.set(
-  "n",
-  "<leader>g",
-  vim.lsp.buf.hover,
-  { desc = "Show [G]o [W]ord info" }
-)
+vim.keymap.set("n", "gd", fzf.lsp_definitions, { desc = "LSP: Definitions (fzf)" })
+vim.keymap.set("n", "gr", fzf.lsp_references, { desc = "LSP: References (fzf)" })
+vim.keymap.set("n", "gi", fzf.lsp_implementations, { desc = "LSP: Implementations (fzf)" })
+vim.keymap.set("n", "gy", fzf.lsp_typedefs, { desc = "LSP: Type definitions (fzf)" })
+
+-- Keep the leader-prefixed alias for muscle memory.
+vim.keymap.set("n", "<leader>gd", fzf.lsp_definitions, { desc = "LSP: Definitions (fzf)" })
+
+-- [<leader>g] Show hover information
+vim.keymap.set("n", "<leader>g", vim.lsp.buf.hover, { desc = "LSP: Hover info" })

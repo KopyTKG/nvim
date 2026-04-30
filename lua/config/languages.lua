@@ -41,6 +41,11 @@ M.formatters = {
   "latexindent",
 }
 
+-- DAP adapters installed by Mason.
+M.dap_adapters = {
+  "netcoredbg",
+}
+
 -- Treesitter parsers.
 M.treesitter = {
   "c",

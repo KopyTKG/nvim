@@ -66,7 +66,11 @@ Leader Key: <Space>
 ═══════════════════════════════════════════════════════════════
  LSP
 ───────────────────────────────────────────────────────────────
-  • Go to Definition       			 [<leader>gd]
+  • Go to Definition (fzf)              		 [gd]
+  • Go to References (fzf)              		 [gr]
+  • Go to Implementations (fzf)          		 [gi]
+  • Go to Type Definition (fzf)         		 [gy]
+  • Definitions (alias)    			 [<leader>gd]
   • Show Hover Info        			  [<leader>g]
   • Show Diagnostics       			  [<leader>e]
   • Next Diagnostic        			  [<leader>d]

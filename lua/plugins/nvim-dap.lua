@@ -47,45 +47,128 @@ return {
       vim.fn.sign_define("DapStopped", { text = "▶", texthl = "DiagnosticInfo", linehl = "Visual", numhl = "" })
 
       -- ─── C# (.NET) via netcoredbg ───────────────────────────────────────────
-      dap.adapters.coreclr = {
-        type = "executable",
-        command = vim.fn.exepath "netcoredbg",
-        args = { "--interpreter=vscode" },
-      }
+      -- Lazy adapter: look up the binary at launch time, not config-load
+      -- time. Mason-installed netcoredbg may not be on PATH yet when this
+      -- file first executes.
+      dap.adapters.coreclr = function(callback, _)
+        local exe = vim.fn.exepath "netcoredbg"
+        if exe == "" then
+          -- Mason installs to this path on Linux.
+          local mason_path = vim.fn.stdpath "data" .. "/mason/bin/netcoredbg"
+          if vim.fn.executable(mason_path) == 1 then
+            exe = mason_path
+          end
+        end
+        if exe == "" then
+          vim.notify(
+            "netcoredbg not found. Run :MasonInstall netcoredbg, then try again.",
+            vim.log.levels.ERROR,
+            { title = "DAP" }
+          )
+          return
+        end
+        callback {
+          type = "executable",
+          command = exe,
+          args = { "--interpreter=vscode" },
+        }
+      end
 
-      -- Find the most likely DLL in the current project.
+      -- Find each .NET project's own entry-point DLL under the cwd.
+      -- A "project DLL" is one whose basename matches its containing project
+      -- folder (e.g. .../Foo/bin/Debug/net9.0/Foo.dll). Dependency copies
+      -- (e.g. .../Foo/bin/Debug/.../DataLayer.dll) are filtered out.
       local function find_dotnet_dll()
         local cwd = vim.fn.getcwd()
         local cmd = string.format(
-          "find %q -path '*/bin/Debug/*' -name '*.dll' -not -name '*.Tests.dll' 2>/dev/null | head -20",
+          "find %q -path '*/bin/Debug/*' -name '*.dll' -not -name '*.Tests.dll' 2>/dev/null",
           cwd
         )
         local handle = io.popen(cmd)
         if not handle then return nil end
         local results = {}
-        for line in handle:lines() do table.insert(results, line) end
+        for line in handle:lines() do
+          local proj = line:match("/([^/]+)/bin/Debug/")
+          local dll_name = line:match("/([^/]+)%.dll$")
+          if proj and dll_name and proj == dll_name then
+            table.insert(results, line)
+          end
+        end
         handle:close()
         return results
       end
 
-      -- Pick a DLL: single match auto-selects, multiple prompts, none prompts free-form.
-      local function dll_picker()
-        return coroutine.create(function(co)
-          local dlls = find_dotnet_dll() or {}
-          if #dlls == 1 then
-            coroutine.resume(co, dlls[1])
-          elseif #dlls > 1 then
+      -- Run `dotnet build` on the current cwd and call back with success/failure.
+      -- If mise is available, run dotnet through it so the project's pinned SDK
+      -- (mise.toml) is resolved correctly even when nvim's PATH didn't pick up
+      -- mise's shell hook (e.g. nvim launched from a non-shell context).
+      local function dotnet_build(on_done)
+        local cmd = vim.fn.executable("mise") == 1
+          and { "mise", "exec", "--", "dotnet", "build" }
+          or { "dotnet", "build" }
+        vim.notify("dotnet build…", vim.log.levels.INFO, { title = "DAP" })
+        vim.system(
+          cmd,
+          { cwd = vim.fn.getcwd(), text = true },
+          function(result)
             vim.schedule(function()
-              vim.ui.select(dlls, { prompt = "Select DLL to debug:" }, function(choice)
-                coroutine.resume(co, choice or dap.ABORT)
-              end)
-            end)
-          else
-            vim.schedule(function()
-              local input = vim.fn.input("Path to DLL: ", vim.fn.getcwd() .. "/", "file")
-              coroutine.resume(co, input ~= "" and input or dap.ABORT)
+              if result.code == 0 then
+                vim.notify("dotnet build OK", vim.log.levels.INFO, { title = "DAP" })
+                on_done(true)
+              else
+                local msg = (result.stderr ~= "" and result.stderr or result.stdout) or "(no output)"
+                vim.notify("dotnet build FAILED:\n" .. msg, vim.log.levels.ERROR, { title = "DAP" })
+                on_done(false)
+              end
             end)
           end
+        )
+      end
+
+      -- Track the most recently picked DLL so the launch's `cwd` can derive
+      -- from it (.NET reads appsettings.json relative to cwd, and we usually
+      -- want the project folder, not the solution folder).
+      local last_picked_dll = nil
+
+      -- Resolve the DLL list (re-scan after build so freshly produced DLLs show).
+      local function resolve_dll(co)
+        local dlls = find_dotnet_dll() or {}
+        local function pick(p)
+          last_picked_dll = p
+          coroutine.resume(co, p or dap.ABORT)
+        end
+        if #dlls == 1 then
+          pick(dlls[1])
+        elseif #dlls > 1 then
+          vim.ui.select(dlls, { prompt = "Select DLL to debug:" }, function(choice)
+            pick(choice)
+          end)
+        else
+          local input = vim.fn.input("Path to DLL: ", vim.fn.getcwd() .. "/", "file")
+          pick(input ~= "" and input or nil)
+        end
+      end
+
+      -- cwd for launch: project folder (parent of bin/Debug) so appsettings.json
+      -- is resolvable. Falls back to nvim's cwd if no DLL picked yet.
+      local function dll_project_cwd()
+        if last_picked_dll then
+          local proj = last_picked_dll:match "(.*)/bin/Debug/"
+          if proj then return proj end
+        end
+        return vim.fn.getcwd()
+      end
+
+      -- Build first, then pick a DLL. If build fails, abort the launch.
+      local function build_and_pick_dll()
+        return coroutine.create(function(co)
+          dotnet_build(function(ok)
+            if not ok then
+              coroutine.resume(co, dap.ABORT)
+              return
+            end
+            resolve_dll(co)
+          end)
         end)
       end
 
@@ -129,8 +212,8 @@ return {
           type = "coreclr",
           name = "launch - netcoredbg",
           request = "launch",
-          program = dll_picker,
-          cwd = function() return vim.fn.getcwd() end,
+          program = build_and_pick_dll,
+          cwd = dll_project_cwd,
           env = {
             ASPNETCORE_ENVIRONMENT = "Development",
             ASPNETCORE_URLS = "http://localhost:5158",

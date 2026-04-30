@@ -16,9 +16,12 @@ return {
   {
     "WhoIsSethDaniel/mason-tool-installer.nvim",
     config = function()
+      local ensure = {}
+      vim.list_extend(ensure, languages.formatters)
+      vim.list_extend(ensure, languages.dap_adapters)
       require("mason-tool-installer").setup {
         lazy = true,
-        ensure_installed = languages.formatters,
+        ensure_installed = ensure,
       }
     end,
   },
