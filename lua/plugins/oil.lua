@@ -9,6 +9,45 @@ return {
       { "<leader>pv", "<cmd>Oil<cr>", desc = "Oil: open parent directory" },
       { "<leader>e", "<cmd>Oil --float<cr>", desc = "Oil: open in floating window" },
     },
+    init = function()
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = "oil_preview",
+        callback = function(args)
+          local winid = vim.api.nvim_get_current_win()
+          local cfg = vim.api.nvim_win_get_config(winid)
+          local width = cfg.width
+          if width then
+            local left, right = "(n) No", "(y) Yes"
+            local pad = width - vim.fn.strdisplaywidth(left) - vim.fn.strdisplaywidth(right)
+            if pad < 1 then
+              pad = 1
+            end
+            vim.api.nvim_win_set_config(winid, {
+              footer = left .. string.rep(" ", pad) .. right,
+              footer_pos = "left",
+            })
+          end
+
+          -- Strip oil's in-buffer "[Y]es [N]o" line; it's redundant with the footer.
+          vim.schedule(function()
+            local bufnr = args.buf
+            if not vim.api.nvim_buf_is_valid(bufnr) then
+              return
+            end
+            local lines = vim.api.nvim_buf_get_lines(bufnr, 0, -1, false)
+            for i = #lines, 1, -1 do
+              if lines[i]:find("%[Y%]es") and lines[i]:find("%[N%]o") then
+                local was_modifiable = vim.bo[bufnr].modifiable
+                vim.bo[bufnr].modifiable = true
+                vim.api.nvim_buf_set_lines(bufnr, i - 1, i, false, { "" })
+                vim.bo[bufnr].modifiable = was_modifiable
+                break
+              end
+            end
+          end)
+        end,
+      })
+    end,
     opts = {
       default_file_explorer = true, -- replaces netrw
       delete_to_trash = true,
@@ -20,6 +59,9 @@ return {
         padding = 4,
         max_width = 100,
         max_height = 30,
+        border = "rounded",
+      },
+      confirmation = {
         border = "rounded",
       },
       keymaps = {

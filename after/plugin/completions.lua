@@ -4,6 +4,10 @@ local cmp = require "cmp"
 require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup {
+  enabled = function()
+    local ft = vim.bo.filetype
+    return ft ~= "oil" and ft ~= "oil_preview"
+  end,
   window = {
     completion = cmp.config.window.bordered(),
     documentation = cmp.config.window.bordered(),
