@@ -25,6 +25,7 @@ Leader Key: <Space>
   • Save File              	 		  [<Leader>w]
   • Search & Replace       	 		  [<Leader>s]
   • Format Code            	 		  [<Leader>f]
+  • Toggle Dark/Light Theme			  [<Leader>=]
 
 ═══════════════════════════════════════════════════════════════
  FZF-LUA
