@@ -109,7 +109,7 @@ Leader Key: <Space>
   • Open in hsplit         			     [<C-h>]
   • Preview                			     [<C-p>]
   • Close                  			     [<C-c>]
-  • Refresh                			     [<C-r>]
+  • Refresh                			[<C-r> / <F5>]
   • Parent dir             			 		[-]
   • CD to dir              			 		[`]
   • Toggle hidden          			       [g.]
