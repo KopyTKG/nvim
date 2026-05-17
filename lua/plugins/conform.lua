@@ -19,6 +19,7 @@ return {
       html = { "prettier", "prettierd", stop_after_first = true },
       yaml = { "prettier", "prettierd", stop_after_first = true },
       sh = { "shfmt" },
+      go = { "goimports" },
       markdown = { "prettier", "prettierd", stop_after_first = true },
       python = { "black", stop_after_first = true },
       svelte = { "prettier", "prettierd", stop_after_first = true },
