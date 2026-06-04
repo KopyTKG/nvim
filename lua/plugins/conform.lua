@@ -27,6 +27,7 @@ return {
       tex = { "latexindent" },
       graphql = { "prettier", "prettierd", stop_after_first = true },
       zig = { "zigfmt" },
+      odin = { "odinfmt" },
     },
     default_format_opts = {
       lsp_format = "never",
