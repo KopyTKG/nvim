@@ -28,6 +28,7 @@ M.lsp_servers = {
   "cssls",
   "graphql",
   "zls",
+  "ols",
 }
 
 -- Formatters installed by Mason.
@@ -39,6 +40,7 @@ M.formatters = {
   "csharpier",
   "black",
   "latexindent",
+  "ols",
 }
 
 -- DAP adapters installed by Mason.
