@@ -14,6 +14,7 @@ Sections:
   7. Oil (File Explorer)
   8. Trouble (Diagnostics)
   9. AI Tools
+ 10. .NET / MAUI
 
 Tip: type <Leader> and pause — which-key shows all available keys.
 
@@ -138,6 +139,16 @@ Leader Key: <Space>
   • Open Claude Code       			 [<Leader>co]
   • Open with Opus Model   			[<Leader>cop]
   • Open with Haiku Model  			[<Leader>coh]
+
+═══════════════════════════════════════════════════════════════
+ .NET / MAUI
+───────────────────────────────────────────────────────────────
+  • Build & Run (-t:Run)   			 [<Leader>nr]
+  • Build                  			 [<Leader>nb]
+  • Launch Android Emulator			 [<Leader>ne]
+  • Install maui workload  			 [<Leader>nw]
+  Commands: :MauiRun :MauiBuild :MauiEmulator :MauiWorkload
+  C#: Roslyn LSP + netcoredbg (F5). XAML: highlight-only.
 
 Press 'q' or <Esc> to close this help.
   ]]

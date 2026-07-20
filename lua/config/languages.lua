@@ -22,7 +22,9 @@ M.lsp_servers = {
   "zk",
   "docker_language_server",
   "prismals",
-  "omnisharp",
+  -- C#: served by Roslyn (seblyng/roslyn.nvim). Installed via `mason_extra`
+  -- from a custom registry, not enabled through mason-lspconfig, so it is
+  -- intentionally absent from this list. Replaces the old `omnisharp`.
   "tombi",
   "svelte",
   "cssls",
@@ -48,6 +50,14 @@ M.dap_adapters = {
   "netcoredbg",
 }
 
+-- Extra Mason packages that aren't plain LSP servers/formatters/DAP adapters,
+-- installed by mason-tool-installer. `roslyn` comes from the custom
+-- github:Crashdummyy/mason-registry registry (see after/plugin/mason.lua) and
+-- is picked up automatically by roslyn.nvim.
+M.mason_extra = {
+  "roslyn",
+}
+
 -- Treesitter parsers.
 M.treesitter = {
   "c",
@@ -67,6 +77,7 @@ M.treesitter = {
   "c_sharp",
   "graphql",
   "zig",
+  "xml", -- also drives XAML highlighting (see lua/kopy/dotnet.lua)
 }
 
 return M

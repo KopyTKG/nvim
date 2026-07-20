@@ -28,6 +28,8 @@ require("mason").setup({
   -- multiple registries, the registry listed first will be used.
   registries = {
     "github:mason-org/mason-registry",
+    -- Provides the `roslyn` (and `rzls`) packages that aren't in mason core.
+    "github:Crashdummyy/mason-registry",
   },
 
   ---@since 1.0.0

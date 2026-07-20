@@ -13,6 +13,7 @@ return {
         { "<leader>c", group = "Claude / Comment" },
         { "<leader>x", group = "Diagnostics (Trouble)" },
         { "<leader>l", group = "Lazygit" },
+        { "<leader>n", group = ".NET / MAUI" },
       },
     },
   },
