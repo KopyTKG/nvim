@@ -53,9 +53,12 @@ M.dap_adapters = {
 -- Extra Mason packages that aren't plain LSP servers/formatters/DAP adapters,
 -- installed by mason-tool-installer. `roslyn` comes from the custom
 -- github:Crashdummyy/mason-registry registry (see after/plugin/mason.lua) and
--- is picked up automatically by roslyn.nvim.
+-- is picked up automatically by roslyn.nvim. `tree-sitter-cli` is required by
+-- nvim-treesitter's `main` branch, which compiles parsers from source
+-- (see lua/plugins/treesitter.lua); Mason puts it on Neovim's PATH.
 M.mason_extra = {
   "roslyn",
+  "tree-sitter-cli",
 }
 
 -- Treesitter parsers.

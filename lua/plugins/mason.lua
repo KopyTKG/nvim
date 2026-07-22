@@ -36,6 +36,13 @@ return {
     "mason-org/mason-lspconfig.nvim",
     opts = {
       ensure_installed = languages.lsp_servers,
+      -- Don't let mason-lspconfig auto-enable every installed Mason package.
+      -- Servers are enabled explicitly in nvim-lspconfig.lua from the central
+      -- list, so auto-enable is redundant here — and harmful: it would attach
+      -- stray installed servers (e.g. a stale `omnisharp`) alongside the ones
+      -- we want. C# in particular must be served by Roslyn alone; a second
+      -- C# client breaks the LSP keymaps (gd/gr/gi/hover).
+      automatic_enable = false,
     },
     dependencies = {
       { "mason-org/mason.nvim", opts = {} },
