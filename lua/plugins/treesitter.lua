@@ -19,6 +19,14 @@ return {
       -- Install the configured parsers (async; a no-op for ones already built).
       ts.install(languages.treesitter)
 
+      -- Set of languages that actually have a grammar in the registry. Used to
+      -- avoid trying to install a parser for a filetype that has none (oil,
+      -- fzf, ...), which would spam "skipping unsupported language" warnings.
+      local installable = {}
+      for _, l in ipairs(require("nvim-treesitter.config").get_available()) do
+        installable[l] = true
+      end
+
       -- Start treesitter highlighting + indentation for every buffer whose
       -- filetype maps to an available parser. Missing parsers are fetched on
       -- demand, preserving the old `auto_install = true` behaviour.
@@ -38,14 +46,15 @@ return {
             end
           end
 
-          -- language.add returns true when the parser is available to load, or
-          -- nil (+err) when it isn't installed yet.
+          -- Parser already available -> just start it.
           local ok, available = pcall(vim.treesitter.language.add, lang)
           if ok and available then
             enable()
-          else
+          elseif installable[lang] then
+            -- Known grammar we don't have yet: install then start.
             ts.install({ lang }):await(vim.schedule_wrap(enable))
           end
+          -- Otherwise the filetype has no grammar (oil, fzf, ...) -> do nothing.
         end,
       })
     end,

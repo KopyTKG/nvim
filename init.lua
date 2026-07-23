@@ -31,6 +31,20 @@ vim.opt.splitright = true
 -- Scroll buffer
 vim.opt.scrolloff = 10
 
+-- Never show folded text. Some buffers — notably Roslyn's decompiled metadata
+-- sources opened by "go to definition" — arrive folded, hiding everything but a
+-- "+-- N lines" header. Disable folding outright, and re-enforce it whenever a
+-- window shows a buffer (those metadata buffers are displayed after startup so
+-- a one-time option isn't enough).
+vim.opt.foldenable = false
+vim.opt.foldlevelstart = 99
+vim.api.nvim_create_autocmd({ "BufWinEnter", "WinEnter", "BufReadPost" }, {
+  group = vim.api.nvim_create_augroup("kopy_no_folds", { clear = true }),
+  callback = function()
+    vim.wo.foldenable = false
+  end,
+})
+
 -- Change Netrw directory listing
 vim.g.netrw_liststyle = 0
 
