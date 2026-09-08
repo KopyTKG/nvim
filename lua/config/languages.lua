@@ -82,6 +82,7 @@ M.treesitter = {
   "zig",
   "xml", -- also drives XAML highlighting (see lua/kopy/dotnet.lua)
   "yaml", -- YAML / Ansible highlighting
+  "toml",
 }
 
 return M
