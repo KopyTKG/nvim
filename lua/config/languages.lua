@@ -83,6 +83,7 @@ M.treesitter = {
   "xml", -- also drives XAML highlighting (see lua/kopy/dotnet.lua)
   "yaml", -- YAML / Ansible highlighting
   "toml",
+  "just", -- justfile highlighting
 }
 
 return M
