@@ -129,12 +129,6 @@ Leader Key: <Space>
 ═══════════════════════════════════════════════════════════════
  AI TOOLS
 ───────────────────────────────────────────────────────────────
-  Codeium (AI Autocomplete):
-  • Accept suggestion      			   	 [Tab]
-  • Next suggestion        			   [Ctrl+n]
-  • Prev suggestion        			   [Ctrl+p]
-  • Dismiss                			   [Ctrl+e]
-
   Claude Code (AI Assistant):
   • Open Claude Code       			 [<Leader>co]
   • Open with Opus Model   			[<Leader>cop]
